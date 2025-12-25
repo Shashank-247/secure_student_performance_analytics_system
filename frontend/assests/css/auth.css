@@ -109,3 +109,13 @@ button:hover {
   cursor: pointer;
   transition: background 0.3s;
 }
+
+.tabs {
+  position: relative;
+  z-index: 10;
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+}
