@@ -1,0 +1,67 @@
+from flask import Flask, request, jsonify
+from functools import wraps
+from auth import hash_password, verify_password, create_access_token, decode_token
+
+app = Flask(__name__)
+
+# Dummy user data (replace with DB later)
+users = {
+    "student1": {"id": 1, "password": hash_password("Student@123"), "role": "student"},
+    "teacher1": {"id": 2, "password": hash_password("Teacher@123"), "role": "teacher"},
+    "admin1": {"id": 3, "password": hash_password("Admin@123"), "role": "admin"}
+}
+
+# -------- JWT PROTECTOR --------
+
+def jwt_required(required_roles=None):
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            auth_header = request.headers.get("Authorization")
+            if not auth_header:
+                return jsonify({"error": "Token missing"}), 401
+
+            token = auth_header.split(" ")[1]
+            payload = decode_token(token)
+
+            if not payload:
+                return jsonify({"error": "Invalid or expired token"}), 401
+
+            if required_roles and payload["role"] not in required_roles:
+                return jsonify({"error": "Access denied"}), 403
+
+            request.user = payload
+            return fn(*args, **kwargs)
+        return wrapper
+    return decorator
+
+# -------- ROUTES --------
+
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.json
+    user = users.get(data["username"])
+
+    if not user or not verify_password(data["password"], user["password"]):
+        return jsonify({"error": "Invalid credentials"}), 401
+
+    token = create_access_token(user["id"], user["role"])
+    return jsonify({"access_token": token})
+
+@app.route("/student-data")
+@jwt_required(required_roles=["student"])
+def student_data():
+    return jsonify({"message": "Student dashboard access"})
+
+@app.route("/teacher-data")
+@jwt_required(required_roles=["teacher"])
+def teacher_data():
+    return jsonify({"message": "Teacher dashboard access"})
+
+@app.route("/admin-data")
+@jwt_required(required_roles=["admin"])
+def admin_data():
+    return jsonify({"message": "Admin dashboard access"})
+
+if __name__ == "__main__":
+    app.run(debug=True)
