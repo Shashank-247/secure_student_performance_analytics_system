@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Settings | SSPAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href=".\assests\css\dashboard.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>SSPAS</h2>
+    <p class="role">Admin Panel</p>
+
+    <ul>
+      <li onclick="location.href='dashboard-admin.html'">Dashboard</li>  
+      <li onclick="location.href='usrmgmt.html'">User Management</li>
+      <li onclick="location.href='logs.html'">System Logs</li>
+      <li class="active">Settings</li>
+      <li>Logout</li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <header class="header">
+      <h1>System Settings</h1>
+      <p>Configure security and platform preferences</p>
+    </header>
+
+    <!-- Security Settings -->
+    <section class="card">
+      <h3>Security Settings</h3>
+
+      <label>
+        <input type="checkbox" id="registrationToggle" checked>
+        Enable User Registration
+      </label>
+
+      <label>
+        <input type="checkbox" id="twoFactor">
+        Enable Two-Factor Authentication (2FA)
+      </label>
+
+      <label>
+        Session Timeout (minutes):
+        <input type="number" id="sessionTimeout" value="30" min="5">
+      </label>
+    </section>
+
+    <!-- Password Policy -->
+    <section class="card">
+      <h3>Password Policy</h3>
+
+      <label>
+        Minimum Password Length:
+        <input type="number" id="minLength" value="8">
+      </label>
+
+      <label>
+        <input type="checkbox" id="uppercase" checked>
+        Require Uppercase Letters
+      </label>
+
+      <label>
+        <input type="checkbox" id="numbers" checked>
+        Require Numbers
+      </label>
+
+      <label>
+        <input type="checkbox" id="special">
+        Require Special Characters
+      </label>
+    </section>
+
+    <button onclick="saveSettings()">Save Settings</button>
+
+  </main>
+
+  <script src=".\assests\js\admin-settings.js"></script>
+</body>
+</html>

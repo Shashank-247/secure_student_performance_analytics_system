@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Management | SSPAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href=".\assests\css\dashboard.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>SSPAS</h2>
+    <p class="role">Admin Panel</p>
+
+    <ul>
+      <li onclick="location.href='dashboard-admin.html'">Dashboard</li>  
+      <li class="active">User Management</li>
+      <li onclick="location.href='logs.html'">System Logs</li>
+      <li onclick="location.href='admin-settings.html'">Settings</li>
+      <li>Logout</li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <header class="header">
+      <h1>User Management</h1>
+      <p>Approve, deactivate, and monitor system users</p>
+    </header>
+
+    <!-- Filter -->
+    <div class="card">
+      <label for="roleFilter"><strong>Filter by Role:</strong></label>
+      <select id="roleFilter" onchange="filterUsers()">
+        <option value="all">All</option>
+        <option value="student">Students</option>
+        <option value="teacher">Teachers</option>
+      </select>
+    </div>
+
+    <!-- Users Table -->
+    <section class="card">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="userTable"></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script src=".\assests\js\admin-users.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Class Analytics | SSPAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href=".\assests\css\dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>SSPAS</h2>
+    <p class="role">Teacher Panel</p>
+
+    <ul>
+      <li onclick="location.href='dashboard-teacher.html'">Dashboard</li>  
+      <li onclick="location.href='student-details.html'">Students</li>
+      <li class="active">Analytics</li>
+      <li>Logout</li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <header class="header">
+      <h1>Class Analytics</h1>
+      <p>Insights into student performance and attendance</p>
+    </header>
+
+    <!-- KPI Cards -->
+    <section class="kpis">
+      <div class="card">
+        <h3>Class Average</h3>
+        <p id="classAvg"></p>
+      </div>
+      <div class="card">
+        <h3>Avg Attendance</h3>
+        <p id="classAttendance"></p>
+      </div>
+      <div class="card">
+        <h3>At-Risk Students</h3>
+        <p id="atRiskCount"></p>
+      </div>
+      <div class="card">
+        <h3>Total Students</h3>
+        <p id="totalStudents"></p>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="charts">
+      <div class="card">
+        <h3>Score Distribution</h3>
+        <canvas id="scoreChart"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Attendance Distribution</h3>
+        <canvas id="attendanceChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Power BI Placeholder -->
+    <section class="card">
+      <h3>Advanced Analytics (Power BI)</h3>
+      <p>Embedded Power BI report will appear here</p>
+
+      <!-- Future Embed -->
+      <!-- <iframe src="POWER_BI_EMBED_URL" width="100%" height="400"></iframe> -->
+    </section>
+
+  </main>
+
+  <script src=".\assests\js\teacher-analytics.js"></script>
+</body>
+</html>

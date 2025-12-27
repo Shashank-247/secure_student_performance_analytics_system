@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard | SSPAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href=".\assests\css\dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>SSPAS</h2>
+    <p class="role">Student Panel</p>
+
+    <ul>
+      <li class="active">Dashboard</li>
+      <li onclick="location.href='student-profile.html'">Profile</li>
+      <li onclick="location.href='student-performance.html'">Performance</li>
+      <li>Logout</li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <header class="header">
+      <h1>Welcome, <span id="studentName"></span></h1>
+      <p>Here is your academic overview</p>
+    </header>
+
+    <!-- KPI Cards -->
+    <section class="kpis">
+      <div class="card">
+        <h3>Total Score</h3>
+        <p id="totalScore"></p>
+      </div>
+      <div class="card">
+        <h3>Grade</h3>
+        <p id="grade"></p>
+      </div>
+      <div class="card">
+        <h3>Attendance</h3>
+        <p id="attendance"></p>
+      </div>
+      <div class="card">
+        <h3>Weekly Study Hours</h3>
+        <p id="studyHours"></p>
+      </div>
+    </section>
+
+    <!-- Chart -->
+    <section class="chart-section">
+      <h2>Subject-wise Performance</h2>
+      <canvas id="marksChart"></canvas>
+    </section>
+
+    <!-- Table -->
+    <section class="table-section">
+      <h2>Marks Breakdown</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Marks</th>
+          </tr>
+        </thead>
+        <tbody id="marksTable"></tbody>
+      </table>
+
+      <p class="fees">Fees Status: <strong id="feesStatus"></strong></p>
+    </section>
+
+  </main>
+
+  <script src=".\assests\js\student-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Dashboard | SSPAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href=".\assests\css\dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    .attendance-controls button {
+      padding: 4px 8px;
+      margin: 0 4px;
+      font-weight: bold;
+    }
+
+    .mark-input {
+      width: 70px;
+      padding: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>SSPAS</h2>
+    <p class="role">Teacher Panel</p>
+
+    <ul>
+      <li class="active">Dashboard</li>
+      <li onclick="location.href='student-details.html'">Students</li>
+      <li onclick="location.href='analytics.html'">Analytics</li>
+      <li>Logout</li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <header class="header">
+      <h1>Class Performance Overview</h1>
+      <p>Edit attendance and marks for your class</p>
+    </header>
+
+    <!-- KPI Cards -->
+    <section class="kpis">
+      <div class="card">
+        <h3>Class Average</h3>
+        <p id="avgScore"></p>
+      </div>
+      <div class="card">
+        <h3>Avg Attendance</h3>
+        <p id="avgAttendance"></p>
+      </div>
+      <div class="card">
+        <h3>Total Students</h3>
+        <p id="totalStudents"></p>
+      </div>
+      <div class="card">
+        <h3>At-Risk Students</h3>
+        <p id="atRisk"></p>
+      </div>
+    </section>
+
+    <!-- Table -->
+    <section class="table-section">
+      <h2>Student List</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Total Score</th>
+            <th>Grade</th>
+            <th>Attendance</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="studentTable"></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script src=".\assests\js\teacher-dashboard.js"></script>
+</body>
+</html>

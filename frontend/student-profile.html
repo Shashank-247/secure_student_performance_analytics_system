@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile | SSPAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href=".\assests\css\dashboard.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>SSPAS</h2>
+    <p class="role">Student Panel</p>
+
+    <ul>
+      <li onclick="location.href='dashboard-student.html'">Dashboard</li>  
+      <li class="active">Profile</li>
+      <li onclick="location.href='student-performance.html'">Performance</li>
+      <li>Logout</li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <header class="header">
+      <h1>My Profile</h1>
+      <p>Personal and academic details</p>
+    </header>
+
+    <!-- Profile Card -->
+    <section class="card profile-card">
+      <h2>Student Information</h2>
+
+      <div class="profile-grid">
+        <div><strong>Full Name:</strong> <span id="name"></span></div>
+        <div><strong>Roll Number:</strong> <span id="roll"></span></div>
+        <div><strong>Email:</strong> <span id="email"></span></div>
+        <div><strong>Age:</strong> <span id="age"></span></div>
+        <div><strong>Course:</strong> <span id="course"></span></div>
+        <div><strong>Semester:</strong> <span id="semester"></span></div>
+        <div><strong>Batch:</strong> <span id="batch"></span></div>
+        <div><strong>Status:</strong> <span id="status"></span></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src=".\assests\js\student-profile.js"></script>
+</body>
+</html>

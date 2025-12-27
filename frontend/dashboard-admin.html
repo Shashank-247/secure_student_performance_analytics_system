@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | SSPAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href=".\assests\css\dashboard.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>SSPAS</h2>
+    <p class="role">Admin Panel</p>
+
+    <ul>
+      <li class="active">Dashboard</li>
+      <li onclick="location.href='usrmgmt.html'">User Management</li>
+      <li onclick="location.href='logs.html'">System Logs</li>
+      <li onclick="location.href='admin-settings.html'">Settings</li>
+      <li>Logout</li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <header class="header">
+      <h1>System Administration</h1>
+      <p>Manage users, roles and platform integrity</p>
+    </header>
+
+    <!-- KPIs -->
+    <section class="kpis">
+      <div class="card">
+        <h3>Total Users</h3>
+        <p id="totalUsers"></p>
+      </div>
+      <div class="card">
+        <h3>Students</h3>
+        <p id="totalStudents"></p>
+      </div>
+      <div class="card">
+        <h3>Teachers</h3>
+        <p id="totalTeachers"></p>
+      </div>
+      <div class="card">
+        <h3>Pending Approvals</h3>
+        <p id="pendingCount"></p>
+      </div>
+    </section>
+
+    <!-- User Table -->
+    <section class="table-section">
+      <h2>User Management</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Change Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="userTable"></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script src=".\assests\js\admin-dashboard.js"></script>
+</body>
+</html>
