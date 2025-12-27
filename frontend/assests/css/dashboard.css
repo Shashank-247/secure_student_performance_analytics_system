@@ -14,7 +14,6 @@ body {
   width: 220px;
   background: #0f172a;
   color: white;
-  height: 100vh;
   padding: 20px;
 }
 
@@ -103,4 +102,58 @@ th {
 .fees {
   margin-top: 12px;
   font-size: 14px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.profile-card h2 {
+  margin-bottom: 12px;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.data-table th,
+.data-table td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px;
+  text-align: left;
+}
+
+.data-table th {
+  background: #f1f5f9;
+}
+
+.data-table button {
+  padding: 6px 10px;
+  margin-right: 6px;
+  font-size: 12px;
+}
+
+button.reject {
+  background: #dc2626;
+}
+
+button.suspend {
+  background: #f59e0b;
+}
+
+.data-table td {
+  font-size: 13px;
+}
+
+.data-table th {
+  font-size: 14px;
+}
+
+.card label {
+  display: block;
+  margin-bottom: 10px;
 }

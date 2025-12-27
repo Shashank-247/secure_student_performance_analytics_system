@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Performance | SSPAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="./assests/css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>SSPAS</h2>
+    <p class="role">Student Panel</p>
+
+    <ul>
+      <li onclick="location.href='dashboard-student.html'">Dashboard</li>
+      <li onclick="location.href='student-profile.html'">Profile</li>
+      <li class="active">Performance</li>
+      <li>Logout</li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <header class="header">
+      <h1>My Performance</h1>
+      <p>Academic progress overview</p>
+    </header>
+
+    <!-- KPI Cards -->
+    <section class="kpis">
+      <div class="card">
+        <h3>Total Score</h3>
+        <p id="totalScore"></p>
+      </div>
+      <div class="card">
+        <h3>Average</h3>
+        <p id="averageScore"></p>
+      </div>
+      <div class="card">
+        <h3>Attendance</h3>
+        <p id="attendance"></p>
+      </div>
+      <div class="card">
+        <h3>Grade</h3>
+        <p id="grade"></p>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="charts">
+      <div class="card">
+        <h3>Subject-wise Marks</h3>
+        <canvas id="marksChart"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Performance Trend</h3>
+        <canvas id="trendChart"></canvas>
+      </div>
+    </section>
+
+  </main>
+
+  <script src=".\assests\js\student-performance.js"></script>
+</body>
+</html>

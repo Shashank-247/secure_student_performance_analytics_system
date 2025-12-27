@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Logs | SSPAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href=".\assests\css\dashboard.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>SSPAS</h2>
+    <p class="role">Admin Panel</p>
+    <ul>
+      <li onclick="location.href='dashboard-admin.html'">Dashboard</li>
+      <li onclick="location.href='usrmgmt.html'">User Management</li>
+      <li class="active">System Logs</li>
+      <li onclick="location.href='admin-settings.html'">Settings</li>
+      <li>Logout</li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <header class="header">
+      <h1>System Logs</h1>
+      <p>Monitor and audit platform activity</p>
+    </header>
+
+    <!-- Filters -->
+    <section class="card">
+      <label><strong>Filter by Event:</strong></label>
+      <select id="eventFilter" onchange="filterLogs()">
+        <option value="all">All</option>
+        <option value="LOGIN">Login</option>
+        <option value="LOGOUT">Logout</option>
+        <option value="APPROVAL">User Approval</option>
+        <option value="UPDATE">Data Update</option>
+      </select>
+    </section>
+
+    <!-- Logs Table -->
+    <section class="card">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>User</th>
+            <th>Role</th>
+            <th>Event</th>
+            <th>Description</th>
+            <th>IP Address</th>
+          </tr>
+        </thead>
+        <tbody id="logTable"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src=".\assests\js\logs.js"></script>
+</body>
+</html>
