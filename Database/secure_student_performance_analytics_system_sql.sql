@@ -15,6 +15,7 @@ CREATE TABLE users (
 CREATE TABLE students (
     student_id INT PRIMARY KEY,
     student_name VARCHAR(100),
+    parents_name VARCHAR(100),
     class VARCHAR(20),
     gender VARCHAR(10),
     district VARCHAR(50),
