@@ -1,42 +1,33 @@
-const logs = [
-  {
-    time: "2025-01-02 10:15:22",
-    user: "admin",
-    role: "Admin",
-    event: "LOGIN",
-    description: "Admin logged in successfully",
-    ip: "192.168.1.10"
-  },
-  {
-    time: "2025-01-02 10:20:01",
-    user: "amit01",
-    role: "Student",
-    event: "LOGIN",
-    description: "Student logged in",
-    ip: "192.168.1.15"
-  },
-  {
-    time: "2025-01-02 10:30:45",
-    user: "admin",
-    role: "Admin",
-    event: "APPROVAL",
-    description: "Approved student amit01",
-    ip: "192.168.1.10"
-  },
-  {
-    time: "2025-01-02 11:00:12",
-    user: "neha_t",
-    role: "Teacher",
-    event: "UPDATE",
-    description: "Updated marks for CS101",
-    ip: "192.168.1.22"
-  }
-];
+import { apiFetch } from "./api.js";
+
+const token = sessionStorage.getItem("access_token");
+const role = sessionStorage.getItem("role");
+
+if (!token || role !== "admin") {
+  window.location.href = "login.html";
+}
 
 const table = document.getElementById("logTable");
+let logs = [];
+
+async function loadLogs() {
+  try {
+    logs = await apiFetch("/admin/logs");
+    renderLogs(logs);
+  } catch (err) {
+    console.error(err);
+    alert("Failed to load system logs");
+  }
+}
 
 function renderLogs(list) {
   table.innerHTML = "";
+
+  if (!list.length) {
+    table.innerHTML =
+      "<tr><td colspan='6'>No logs available</td></tr>";
+    return;
+  }
 
   list.forEach(log => {
     const row = document.createElement("tr");
@@ -53,14 +44,14 @@ function renderLogs(list) {
 }
 
 function filterLogs() {
-  const event = document.getElementById("eventFilter").value;
+  const selectedEvent =
+    document.getElementById("eventFilter").value;
 
-  if (event === "all") {
+  if (selectedEvent === "all") {
     renderLogs(logs);
   } else {
-    const filtered = logs.filter(log => log.event === event);
-    renderLogs(filtered);
+    renderLogs(logs.filter(l => l.event === selectedEvent));
   }
 }
 
-renderLogs(logs);
+loadLogs();

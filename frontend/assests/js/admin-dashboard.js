@@ -1,68 +1,117 @@
-// Mock admin data
-const adminData = {
-  totalUsers: 12,
-  students: 8,
-  teachers: 3,
-  pending: 1,
+import { apiFetch } from "./api.js";
 
-  users: [
-    { id: 1, name: "Amit Sharma", role: "Student", status: "Active" },
-    { id: 2, name: "Riya Singh", role: "Student", status: "Pending" },
-    { id: 3, name: "Kunal Verma", role: "Teacher", status: "Active" },
-    { id: 4, name: "Admin", role: "Admin", status: "Active" }
-  ]
-};
+const token = sessionStorage.getItem("access_token");
+const role = sessionStorage.getItem("role");
 
-// Populate KPIs
-document.getElementById("totalUsers").innerText = adminData.totalUsers;
-document.getElementById("totalStudents").innerText = adminData.students;
-document.getElementById("totalTeachers").innerText = adminData.teachers;
-document.getElementById("pendingCount").innerText = adminData.pending;
-
-// Populate table
-const table = document.getElementById("userTable");
-
-adminData.users.forEach((u, index) => {
-  table.innerHTML += `
-    <tr>
-      <td>${u.name}</td>
-      <td>${u.role}</td>
-      <td>${u.status}</td>
-      <td>
-        <select onchange="changeRole(${index}, this.value)">
-          <option value="">-- Select --</option>
-          <option value="Student">Student</option>
-          <option value="Teacher">Teacher</option>
-          <option value="Admin">Admin</option>
-        </select>
-      </td>
-      <td>
-        ${u.status === "Pending" 
-          ? `<button onclick="approveUser(${index})">Approve</button>` 
-          : `<button onclick="disableUser(${index})">Disable</button>`}
-      </td>
-    </tr>
-  `;
-});
-
-// Approve user
-function approveUser(index) {
-  adminData.users[index].status = "Active";
-  alert("User approved (mock)");
-  console.log("Approved:", adminData.users[index]);
-  location.reload();
+if (!token || role !== "admin") {
+  window.location.href = "login.html";
 }
 
-// Disable user
-function disableUser(index) {
-  alert("User disabled (mock)");
-  console.log("Disabled:", adminData.users[index]);
+let users = [];
+
+async function loadAdminDashboard() {
+  try {
+    const stats = await apiFetch("/admin/dashboard");
+    users = await apiFetch("/admin/users");
+
+    document.getElementById("totalUsers").innerText = stats.total_users;
+    document.getElementById("totalStudents").innerText = stats.students;
+    document.getElementById("totalTeachers").innerText = stats.teachers;
+    document.getElementById("pendingCount").innerText = stats.pending;
+
+    renderUserTable(users);
+  } catch (err) {
+    console.error(err);
+    alert("Failed to load admin dashboard");
+  }
 }
 
-// Change role
-function changeRole(index, newRole) {
+function renderUserTable(data) {
+  const table = document.getElementById("userTable");
+  table.innerHTML = "";
+
+  if (!data.length) {
+    table.innerHTML =
+      "<tr><td colspan='5'>No users found</td></tr>";
+    return;
+  }
+
+  data.forEach(u => {
+    table.innerHTML += `
+      <tr>
+        <td>${u.name}</td>
+        <td>${u.role}</td>
+        <td>${u.status}</td>
+        <td>
+          <select onchange="changeRole(${u.id}, this.value)">
+            <option value="">-- Select --</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="admin">Admin</option>
+          </select>
+        </td>
+        <td>
+          ${
+            u.status === "Pending"
+              ? `<button onclick="approveUser(${u.id})">Approve</button>
+                 <button onclick="rejectUser(${u.id})">Reject</button>`
+              : `<button onclick="disableUser(${u.id})">Disable</button>`
+          }
+        </td>
+      </tr>
+    `;
+  });
+}
+
+async function approveUser(userId) {
+  try {
+    await apiFetch(`/admin/users/${userId}/approve`, {
+      method: "PUT"
+    });
+    loadAdminDashboard();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to approve user");
+  }
+}
+
+async function rejectUser(userId) {
+  try {
+    await apiFetch(`/admin/users/${userId}/reject`, {
+      method: "PUT"
+    });
+    loadAdminDashboard();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to reject user");
+  }
+}
+
+async function disableUser(userId) {
+  try {
+    await apiFetch(`/admin/users/${userId}/disable`, {
+      method: "PUT"
+    });
+    loadAdminDashboard();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to disable user");
+  }
+}
+
+async function changeRole(userId, newRole) {
   if (!newRole) return;
-  adminData.users[index].role = newRole;
-  alert("Role updated (mock)");
-  console.log("Role changed:", adminData.users[index]);
+
+  try {
+    await apiFetch(`/admin/users/${userId}/role`, {
+      method: "PUT",
+      body: JSON.stringify({ role: newRole })
+    });
+    loadAdminDashboard();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to update role");
+  }
 }
+
+loadAdminDashboard();
