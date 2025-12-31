@@ -73,10 +73,11 @@ CREATE TABLE academic_records (
 
 CREATE TABLE fees (
     fee_id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT,
-    status ENUM('paid','unpaid'),
+    student_id INT NOT NULL,
+    status ENUM('paid','unpaid') NOT NULL,
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
+
 
 -- Password Generation
 	-- Student Password Generation
@@ -196,11 +197,13 @@ IGNORE 1 ROWS
 
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fees.csv'
 INTO TABLE fees
-FIELDS TERMINATED BY ',' 
+FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
-(fee_id, student_id);
+(student_id, status);
+
+
 
 -- Check students table
 SELECT * FROM students;
@@ -211,7 +214,5 @@ SELECT * FROM fees;
 -- Check academic_records table
 SELECT * FROM academic_records;
 
-
-
-
+SELECT * FROM users;
 
