@@ -151,17 +151,16 @@ CREATE VIEW admin_fees_update AS
 SELECT * FROM fees;
 
 
-
-
-
 -- students csv file
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/students.csv'
+IGNORE
 INTO TABLE students
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (student_id, student_name, age, class, parent_name, parent_education, gender, district, weekly_self_study_hours);
+
 
 -- academic_records csv file
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/academic_records.csv'
