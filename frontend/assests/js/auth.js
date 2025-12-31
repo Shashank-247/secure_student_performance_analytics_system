@@ -1,3 +1,5 @@
+// TAB SWITCHING
+
 function showLogin() {
   document.getElementById("loginForm").classList.add("active");
   document.getElementById("registerForm").classList.remove("active");
@@ -14,21 +16,61 @@ function showRegister() {
   document.getElementById("loginTab").classList.remove("active");
 }
 
-/* Placeholder login logic */
-document.getElementById("loginForm").addEventListener("submit", function (e) {
+// LOGIN (FASTAPI INTEGRATION) 
+
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  const username = document.getElementById("loginUsername").value;
-  const password = document.getElementById("loginPassword").value;
+  const username = document.getElementById("loginUsername").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
 
-  // Later: replace with fetch() to Python backend
-  console.log("Login:", username, password);
+  if (!username || !password) {
+    alert("Please enter username and password");
+    return;
+  }
 
-  // Example redirect
-  window.location.href = "dashboard.html";
+  try {
+    const response = await fetch("http://127.0.0.1:8000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.detail || "Login failed");
+      return;
+    }
+
+    // Store JWT token & role
+    sessionStorage.setItem("access_token", data.access_token);
+    sessionStorage.setItem("role", data.role);
+
+    // Redirect based on role
+    if (data.role === "student") {
+      window.location.href = "dashboard-student.html";
+    } else if (data.role === "teacher") {
+      window.location.href = "dashboard-teacher.html";
+    } else if (data.role === "admin") {
+      window.location.href = "dashboard-admin.html";
+    } else {
+      alert("Unknown user role");
+    }
+
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Unable to connect to backend server");
+  }
 });
 
-/* Placeholder register logic */
+// REGISTER (PLACEHOLDER)
+
 document.getElementById("registerForm").addEventListener("submit", function (e) {
   e.preventDefault();
   alert("Registration submitted. Await admin approval.");
