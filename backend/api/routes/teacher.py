@@ -1,13 +1,15 @@
-# backend/api/routes/teacher.py
+from fastapi import APIRouter, Depends
+from backend.api.auth import get_current_user
+from backend.api.database import get_db_connection
 
-from fastapi import APIRouter
+router = APIRouter(prefix="/teacher", tags=["Teacher"])
 
-router = APIRouter()
+@router.get("/students")
+def view_students(current_user=Depends(get_current_user)):
+    if current_user["role"] != "teacher":
+        return {"error": "Not allowed"}
 
-@router.get("/dashboard")
-def teacher_dashboard():
-    return {
-        "message": "Teacher Dashboard",
-        "can_edit_marks": True,
-        "assigned_classes": ["9", "10"]
-    }
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM teacher_view")
+    return cursor.fetchall()

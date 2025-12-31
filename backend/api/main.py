@@ -1,17 +1,22 @@
+# backend/api/main.py
+
 from fastapi import FastAPI
-from backend.api.routes import admin, teacher, student
-from backend.api.routes.auth_routes import router as auth_router
+from fastapi.middleware.cors import CORSMiddleware
+
+from backend.api import admin, teacher, student
+from backend.api.auth_routes import router as auth_router
 
 app = FastAPI(title="Secure Student Analytics System")
 
-# Auth
-app.include_router(auth_router, prefix="/auth", tags=["Auth"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Role based routes
-app.include_router(admin.router, prefix="/admin", tags=["Admin"])
-app.include_router(teacher.router, prefix="/teacher", tags=["Teacher"])
-app.include_router(student.router, prefix="/student", tags=["Student"])
-
-@app.get("/")
-def root():
-    return {"message": "API is running"}
+app.include_router(auth_router)
+app.include_router(admin.router)
+app.include_router(teacher.router)
+app.include_router(student.router)
