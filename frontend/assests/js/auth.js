@@ -1,77 +1,81 @@
-// TAB SWITCHING
+document.addEventListener("DOMContentLoaded", () => {
 
-function showLogin() {
-  document.getElementById("loginForm").classList.add("active");
-  document.getElementById("registerForm").classList.remove("active");
+  const loginTab = document.getElementById("loginTab");
+  const registerTab = document.getElementById("registerTab");
+  const loginForm = document.getElementById("loginForm");
+  const registerForm = document.getElementById("registerForm");
 
-  document.getElementById("loginTab").classList.add("active");
-  document.getElementById("registerTab").classList.remove("active");
-}
-
-function showRegister() {
-  document.getElementById("registerForm").classList.add("active");
-  document.getElementById("loginForm").classList.remove("active");
-
-  document.getElementById("registerTab").classList.add("active");
-  document.getElementById("loginTab").classList.remove("active");
-}
-
-// LOGIN (FASTAPI INTEGRATION) 
-
-document.getElementById("loginForm").addEventListener("submit", async function (e) {
-  e.preventDefault();
-
-  const username = document.getElementById("loginUsername").value.trim();
-  const password = document.getElementById("loginPassword").value.trim();
-
-  if (!username || !password) {
-    alert("Please enter username and password");
+  if (!loginTab || !registerTab || !loginForm || !registerForm) {
+    console.error("Tab elements not found");
     return;
   }
 
-  try {
-    const response = await fetch("http://127.0.0.1:8000/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password
-      })
-    });
+  function showLogin() {
+    loginForm.classList.add("active");
+    registerForm.classList.remove("active");
 
-    const data = await response.json();
+    loginTab.classList.add("active");
+    registerTab.classList.remove("active");
+  }
 
-    if (!response.ok) {
-      alert(data.detail || "Login failed");
+  function showRegister() {
+    registerForm.classList.add("active");
+    loginForm.classList.remove("active");
+
+    registerTab.classList.add("active");
+    loginTab.classList.remove("active");
+  }
+
+  loginTab.addEventListener("click", showLogin);
+  registerTab.addEventListener("click", showRegister);
+
+  // LOGIN
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("loginUsername").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
+
+    if (!username || !password) {
+      alert("Please enter username and password");
       return;
     }
 
-    // Store JWT token & role
-    sessionStorage.setItem("access_token", data.access_token);
-    sessionStorage.setItem("role", data.role);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
 
-    // Redirect based on role
-    if (data.role === "student") {
-      window.location.href = "dashboard-student.html";
-    } else if (data.role === "teacher") {
-      window.location.href = "dashboard-teacher.html";
-    } else if (data.role === "admin") {
-      window.location.href = "dashboard-admin.html";
-    } else {
-      alert("Unknown user role");
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.detail || "Login failed");
+        return;
+      }
+
+      sessionStorage.setItem("access_token", data.access_token);
+      sessionStorage.setItem("role", data.role);
+
+      if (data.role === "student") {
+        window.location.href = "dashboard-student.html";
+      } else if (data.role === "teacher") {
+        window.location.href = "dashboard-teacher.html";
+      } else if (data.role === "admin") {
+        window.location.href = "dashboard-admin.html";
+      }
+
+    } catch (err) {
+      alert("Backend not reachable");
+      console.error(err);
     }
+  });
 
-  } catch (error) {
-    console.error("Login error:", error);
-    alert("Unable to connect to backend server");
-  }
-});
+  // REGISTER (placeholder)
+  registerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Registration submitted. Await admin approval.");
+  });
 
-// REGISTER (PLACEHOLDER)
-
-document.getElementById("registerForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  alert("Registration submitted. Await admin approval.");
 });
