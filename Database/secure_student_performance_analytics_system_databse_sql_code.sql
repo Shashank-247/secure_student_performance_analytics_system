@@ -4,7 +4,7 @@ USE student_analytics;
 
 CREATE TABLE users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(100) UNIQUE,
+    username VARCHAR(100),
     password_hash VARCHAR(255),
     role ENUM('admin','teacher','student') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -16,16 +16,12 @@ CREATE TABLE students (
     student_name VARCHAR(100),
     age INT,
     class VARCHAR(20),
+    weekly_self_study_hours DECIMAL(4,2),
     gender VARCHAR(10),
     district VARCHAR(50),
     parent_name VARCHAR(100),
     parent_education VARCHAR(50)
 );
-
-ALTER TABLE students
-ADD weekly_self_study_hours DECIMAL(4,2) AFTER class;
-
-describe students;
 
 CREATE TABLE teachers (
     teacher_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -78,27 +74,6 @@ CREATE TABLE fees (
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
-
--- Password Generation
-	-- Student Password Generation
-    INSERT INTO users (username, password_hash, role)
-SELECT 
-    student_name,
-    CONCAT(student_id, student_name, '@12345'),
-    'student'
-FROM students;
-
--- Teacher Password Generation 
-INSERT INTO users (username, password_hash, role)
-SELECT
-    teacher_name,
-    CONCAT(teacher_id, teacher_name, '@123'),
-    'teacher'
-FROM teachers;
-
--- Admin Password
-INSERT INTO users (username, password_hash, role)
-VALUES ('admin', 'Admin@123', 'admin');
 
 -- Student View
 
@@ -204,15 +179,26 @@ IGNORE 1 ROWS
 (student_id, status);
 
 
+-- Password Generation
+	-- Student Password Generation
+-- Inserting students into users table
+INSERT INTO users (username, password_hash, role)
+SELECT 
+    student_name,
+    CONCAT(student_id, student_name, '@12345'),
+    'student'
+FROM students;
 
--- Check students table
-SELECT * FROM students;
+-- Teacher Password Generation 
+INSERT INTO users (username, password_hash, role)
+SELECT
+    teacher_name,
+    CONCAT(teacher_id, teacher_name, '@123'),
+    'teacher'
+FROM teachers;
 
--- Check fees table
-SELECT * FROM fees;
+-- Admin Password
+INSERT INTO users (username, password_hash, role)
+VALUES ('admin', 'Admin@123', 'admin');
 
--- Check academic_records table
-SELECT * FROM academic_records;
-
-SELECT * FROM users;
 
