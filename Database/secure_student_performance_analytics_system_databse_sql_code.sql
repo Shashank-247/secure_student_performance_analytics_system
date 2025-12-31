@@ -180,25 +180,24 @@ IGNORE 1 ROWS
 
 
 -- Password Generation
-	-- Student Password Generation
--- Inserting students into users table
+
+-- Student Password Generation (hashed)
 INSERT INTO users (username, password_hash, role)
 SELECT 
     student_name,
-    CONCAT(student_id, student_name, '@12345'),
+    SHA2(CONCAT(student_id, student_name, '@12345'), 256),
     'student'
 FROM students;
 
--- Teacher Password Generation 
+-- Teacher Password Generation (hashed)
 INSERT INTO users (username, password_hash, role)
 SELECT
     teacher_name,
-    CONCAT(teacher_id, teacher_name, '@123'),
+    SHA2(CONCAT(teacher_id, teacher_name, '@123'), 256),
     'teacher'
 FROM teachers;
 
--- Admin Password
+-- Admin Password (hashed)
 INSERT INTO users (username, password_hash, role)
-VALUES ('admin', 'Admin@123', 'admin');
-
+VALUES ('admin', SHA2('Admin_got_all_access@12345', 256), 'admin');
 
