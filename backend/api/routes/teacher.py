@@ -1,13 +1,13 @@
 # backend/api/routes/teacher.py
 
-from fastapi import APIRouter, Depends
-from backend.api.auth import get_current_user
+from fastapi import APIRouter
 
 router = APIRouter()
 
 @router.get("/dashboard")
-def teacher_dashboard(current_user: dict = Depends(get_current_user)):
+def teacher_dashboard():
     return {
-        "message": "Teacher dashboard",
-        "user": current_user
+        "message": "Teacher Dashboard",
+        "can_edit_marks": True,
+        "assigned_classes": ["9", "10"]
     }
