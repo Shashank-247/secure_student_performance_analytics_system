@@ -67,6 +67,7 @@ CREATE TABLE academic_records (
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
+
 CREATE TABLE fees (
     fee_id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT NOT NULL,
@@ -150,6 +151,9 @@ CREATE VIEW admin_fees_update AS
 SELECT * FROM fees;
 
 
+
+
+
 -- students csv file
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/students.csv'
 INTO TABLE students
@@ -166,17 +170,18 @@ FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
-(record_id, student_id, english, hindi, maths, science, sst, attendance);
+(student_id, english, hindi, maths, science, sst, attendance);
 
 -- Fees csv File 
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fees.csv'
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\fees.csv'
 INTO TABLE fees
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
-(student_id, status);
+(student_id, @status)
+SET status = LCASE(TRIM(@status));
 
 
 -- Password Generation
@@ -201,3 +206,8 @@ FROM teachers;
 INSERT INTO users (username, password_hash, role)
 VALUES ('admin', SHA2('Admin_got_all_access@12345', 256), 'admin');
 
+SELECT * FROM users;
+SELECT * FROM students;
+SELECT * FROM teachers;
+SELECT * FROM academic_records;
+SELECT * FROM fees;
