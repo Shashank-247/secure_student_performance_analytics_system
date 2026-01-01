@@ -1,16 +1,17 @@
+-- create database
 CREATE DATABASE student_analytics;
 USE student_analytics;
 
-
+-- Users Table
 CREATE TABLE users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(100),
+    username VARCHAR(150) UNIQUE,
     password_hash VARCHAR(255),
     role ENUM('admin','teacher','student') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- Students Table
 CREATE TABLE students (
     student_id INT PRIMARY KEY,
     student_name VARCHAR(100),
@@ -23,35 +24,29 @@ CREATE TABLE students (
     parent_education VARCHAR(50)
 );
 
+-- Teachers Table
 CREATE TABLE teachers (
     teacher_id INT PRIMARY KEY AUTO_INCREMENT,
     teacher_name VARCHAR(100),
     subject VARCHAR(50)
 );
+INSERT INTO teachers (teacher_name, subject) VALUES
+('Ayush Singh', 'Maths'),
+('Sarita Mishra', 'Science'),
+('Rohit Sharma', 'English'),
+('Neha Singh', 'Hindi'),
+('Amit Kumar', 'SST');
 
-INSERT INTO teachers (teacher_id, teacher_name, subject) VALUES
-('1','Ayush Singh', 'Maths'),
-('2','Sarita Mishra', 'Science'),
-('3','Rohit Sharma', 'English'),
-('4','Neha Singh', 'Hindi'),
-('5','Amit Kumar', 'SST');
-
-
+-- Academic Records
 CREATE TABLE academic_records (
     record_id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT,
-
     english INT CHECK (english BETWEEN 0 AND 100),
     hindi INT CHECK (hindi BETWEEN 0 AND 100),
     maths INT CHECK (maths BETWEEN 0 AND 100),
     science INT CHECK (science BETWEEN 0 AND 100),
     sst INT CHECK (sst BETWEEN 0 AND 100),
-
-    -- Automatic total
-    total INT GENERATED ALWAYS AS
-    (english + hindi + maths + science + sst) STORED,
-
-    -- Automatic grade
+    total INT GENERATED ALWAYS AS (english + hindi + maths + science + sst) STORED,
     grade VARCHAR(2) GENERATED ALWAYS AS (
         CASE
             WHEN (english + hindi + maths + science + sst) >= 450 THEN 'A'
@@ -62,12 +57,11 @@ CREATE TABLE academic_records (
             ELSE 'F'
         END
     ) STORED,
-
     attendance INT,
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
-
+-- Fees Table
 CREATE TABLE fees (
     fee_id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT NOT NULL,
@@ -75,14 +69,67 @@ CREATE TABLE fees (
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
+-- Load CSV Data
+-- Make sure file paths are correct
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/students.csv'
+IGNORE
+INTO TABLE students
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(student_id, student_name, age, class, parent_name, parent_education, gender, district, weekly_self_study_hours);
 
--- Student View
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/academic_records.csv'
+INTO TABLE academic_records
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(student_id, english, hindi, maths, science, sst, attendance);
 
-CREATE VIEW student_view AS
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fees.csv'
+INTO TABLE fees
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(student_id, @status)
+SET status = LCASE(TRIM(@status));
+
+-- Insert Users (Unique username)
+-- Students
+INSERT INTO users (username, password_hash, role)
+SELECT 
+    CONCAT(student_name,'_',student_id) AS username,
+    SHA2(CONCAT(student_id, student_name, '@12345'), 256),
+    'student'
+FROM students;
+
+-- Teachers
+
+INSERT INTO users (username, password_hash, role)
+SELECT 
+    CONCAT(teacher_name, '_', teacher_id) AS username,
+    SHA2(CONCAT(teacher_id, teacher_name, '@123'), 256) AS password_hash,
+    'teacher'
+FROM teachers;
+
+-- Admin
+INSERT INTO users (username, password_hash, role)
+VALUES ('admin', SHA2('Admin_got_all_access@12345', 256), 'admin');
+
+-- Student Dashboard View
+CREATE OR REPLACE VIEW student_dashboard AS
 SELECT 
     s.student_id,
     s.student_name,
     s.class,
+    s.gender,
+    s.district,
+    s.parent_name,
+    s.parent_education,
+    s.weekly_self_study_hours,
     a.english,
     a.hindi,
     a.maths,
@@ -94,13 +141,12 @@ SELECT
     f.status AS fees_status
 FROM students s
 JOIN academic_records a ON s.student_id = a.student_id
-JOIN fees f ON s.student_id = f.student_id;
+JOIN fees f ON s.student_id = f.student_id
+ORDER BY s.student_id;
 
-
--- Teacher view
-
-CREATE VIEW teacher_view AS
-SELECT
+-- Teacher & Admin Views
+CREATE OR REPLACE VIEW teacher_view AS
+SELECT DISTINCT
     s.student_id,
     s.student_name,
     s.class,
@@ -115,16 +161,8 @@ SELECT
 FROM students s
 JOIN academic_records a ON s.student_id = a.student_id;
 
--- Teacher Update View
-
-CREATE VIEW teacher_update_view AS
-SELECT record_id, student_id, english, hindi, maths, science, sst, attendance
-FROM academic_records;
-
--- Admin View
-
-CREATE VIEW admin_view AS
-SELECT
+CREATE OR REPLACE VIEW admin_view AS
+SELECT DISTINCT
     s.student_id,
     s.student_name,
     s.class,
@@ -139,74 +177,12 @@ FROM students s
 JOIN academic_records a ON s.student_id = a.student_id
 JOIN fees f ON s.student_id = f.student_id;
 
-
--- Admin update view 
-CREATE VIEW admin_students_update AS
-SELECT * FROM students;
-
-CREATE VIEW admin_academic_update AS
-SELECT * FROM academic_records;
-
-CREATE VIEW admin_fees_update AS
-SELECT * FROM fees;
-
-
--- students csv file
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/students.csv'
-IGNORE
-INTO TABLE students
-FIELDS TERMINATED BY ',' 
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS
-(student_id, student_name, age, class, parent_name, parent_education, gender, district, weekly_self_study_hours);
-
-
--- academic_records csv file
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/academic_records.csv'
-INTO TABLE academic_records
-FIELDS TERMINATED BY ',' 
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS
-(student_id, english, hindi, maths, science, sst, attendance);
-
--- Fees csv File 
-
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\fees.csv'
-INTO TABLE fees
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS
-(student_id, @status)
-SET status = LCASE(TRIM(@status));
-
-
--- Password Generation
-
--- Student Password Generation (hashed)
-INSERT INTO users (username, password_hash, role)
-SELECT 
-    student_name,
-    SHA2(CONCAT(student_id, student_name, '@12345'), 256),
-    'student'
-FROM students;
-
--- Teacher Password Generation (hashed)
-INSERT INTO users (username, password_hash, role)
-SELECT
-    teacher_name,
-    SHA2(CONCAT(teacher_id, teacher_name, '@123'), 256),
-    'teacher'
-FROM teachers;
-
--- Admin Password (hashed)
-INSERT INTO users (username, password_hash, role)
-VALUES ('admin', SHA2('Admin_got_all_access@12345', 256), 'admin');
-
 SELECT * FROM users;
 SELECT * FROM students;
 SELECT * FROM teachers;
 SELECT * FROM academic_records;
 SELECT * FROM fees;
+SELECT * FROM student_dashboard;
+SELECT * FROM teacher_view;
+SELECT * FROM admin_view;
+
