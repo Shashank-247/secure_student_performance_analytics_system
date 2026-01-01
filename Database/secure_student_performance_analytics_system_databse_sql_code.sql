@@ -1,5 +1,5 @@
 -- CREATE DATABASE
-CREATE DATABASE IF NOT EXISTS student_analytics;
+CREATE DATABASE student_analytics;
 USE student_analytics;
 
 -- USERS TABLE
@@ -229,7 +229,7 @@ SELECT * FROM academic_records;
 
 -- ADMIN VIEW
 CREATE OR REPLACE VIEW admin_view AS
-SELECT s.student_id, s.student_name, s.class, s.gender, s.district, s.parent_education,
+SELECT s.student_id, s.student_name, s.class, s.weekly_self_study, s.gender, s.district, s.parent_education,
        a.total, a.grade, a.attendance, f.status AS fees_status
 FROM students s
 JOIN academic_records a ON s.student_id = a.student_id
@@ -254,5 +254,4 @@ GRANT SELECT ON student_analytics.student_self_view TO 'student_user'@'localhost
 FLUSH PRIVILEGES;
 
 -- SHOW TABLES AND VIEWS
-SHOW TABLES;
 SHOW FULL TABLES WHERE Table_type = 'VIEW';
