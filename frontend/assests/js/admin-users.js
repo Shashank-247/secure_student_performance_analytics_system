@@ -1,51 +1,53 @@
-const users = [
-  {
-    name: "Amit Sharma",
-    username: "amit01",
-    role: "student",
-    status: "Pending"
-  },
-  {
-    name: "Neha Verma",
-    username: "neha_t",
-    role: "teacher",
-    status: "Active"
-  },
-  {
-    name: "Rohit Kumar",
-    username: "rohit22",
-    role: "student",
-    status: "Suspended"
-  }
-];
+import { apiFetch } from "./api.js";
+
+const token = sessionStorage.getItem("access_token");
+const role = sessionStorage.getItem("role");
+
+if (!token || role !== "admin") {
+  window.location.href = "login.html";
+}
 
 const table = document.getElementById("userTable");
+let users = [];
 
-/* Render Users */
+async function loadUsers() {
+  try {
+    users = await apiFetch("/admin/users");
+    renderUsers(users);
+  } catch (err) {
+    console.error(err);
+    alert("Failed to load users");
+  }
+}
+
 function renderUsers(list) {
   table.innerHTML = "";
 
-  list.forEach((user, index) => {
-    const row = document.createElement("tr");
+  if (!list.length) {
+    table.innerHTML =
+      "<tr><td colspan='5'>No users found</td></tr>";
+    return;
+  }
 
+  list.forEach(user => {
     let actions = "";
 
     if (user.status === "Pending") {
       actions = `
-        <button onclick="approveUser(${index})">Approve</button>
-        <button class="danger" onclick="rejectUser(${index})">Reject</button>
+        <button onclick="approveUser(${user.id})">Approve</button>
+        <button class="danger" onclick="rejectUser(${user.id})">Reject</button>
       `;
     }
 
     if (user.status === "Active") {
       actions = `
-        <button class="warning" onclick="suspendUser(${index})">Suspend</button>
+        <button class="warning" onclick="suspendUser(${user.id})">Suspend</button>
       `;
     }
 
     if (user.status === "Suspended") {
       actions = `
-        <button onclick="activateUser(${index})">Reactivate</button>
+        <button onclick="activateUser(${user.id})">Reactivate</button>
       `;
     }
 
@@ -53,6 +55,7 @@ function renderUsers(list) {
       actions = `<span class="muted">Rejected</span>`;
     }
 
+    const row = document.createElement("tr");
     row.innerHTML = `
       <td>${user.name}</td>
       <td>${user.username}</td>
@@ -65,38 +68,40 @@ function renderUsers(list) {
   });
 }
 
-/* User Actions */
-function approveUser(index) {
-  users[index].status = "Active";
-  renderUsers(users);
+async function approveUser(userId) {
+  await updateUser(`/admin/users/${userId}/approve`);
 }
 
-function rejectUser(index) {
-  users[index].status = "Rejected";
-  renderUsers(users);
+async function rejectUser(userId) {
+  await updateUser(`/admin/users/${userId}/reject`);
 }
 
-function suspendUser(index) {
-  users[index].status = "Suspended";
-  renderUsers(users);
+async function suspendUser(userId) {
+  await updateUser(`/admin/users/${userId}/suspend`);
 }
 
-function activateUser(index) {
-  users[index].status = "Active";
-  renderUsers(users);
+async function activateUser(userId) {
+  await updateUser(`/admin/users/${userId}/activate`);
 }
 
-/* Filter by Role */
-function filterUsers() {
-  const role = document.getElementById("roleFilter").value;
-
-  if (role === "all") {
-    renderUsers(users);
-  } else {
-    const filtered = users.filter(user => user.role === role);
-    renderUsers(filtered);
+async function updateUser(endpoint) {
+  try {
+    await apiFetch(endpoint, { method: "PUT" });
+    loadUsers();
+  } catch (err) {
+    console.error(err);
+    alert("Action failed");
   }
 }
 
-/* Initial Load */
-renderUsers(users);
+function filterUsers() {
+  const selectedRole = document.getElementById("roleFilter").value;
+
+  if (selectedRole === "all") {
+    renderUsers(users);
+  } else {
+    renderUsers(users.filter(u => u.role === selectedRole));
+  }
+}
+
+loadUsers();

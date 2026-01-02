@@ -1,0 +1,121 @@
+student_id,student_name,age,class,parents_name,parent_education,gender,district,weekly_self_study_hours,english_score,hindi_score,maths_score,science_score,sst_score,total_score,grade,attendance,fees_status
+1,Priya Chaudhary,13,8th,Nisha Chaudhary,10th,Male,North Delhi,4,55,95,49,80,76,355,C,126,Pending
+2,Sneha Malhotra,13,8th,Suresh Malhotra,12th,Male,Faridabad,21.7,39,50,41,84,38,252,E,135,Pending
+3,Neha Malhotra,15,10th,Karan Malhotra,10th,Male,North Delhi,16.2,61,44,45,69,70,289,E,143,Pending
+4,Nisha Mehta,14,8th,Rohit Mehta,10th,Female,Faridabad,13.4,78,69,84,70,64,365,C,178,Pending
+5,Ritika Verma,14,9th,Anjali Verma,Post-Graduate,Male,South Delhi,19.6,81,63,66,39,42,291,E,185,Pending
+6,Priya Singh,14,9th,Kavya Singh,10th,Female,Ghaziabad,8.5,56,79,74,93,72,374,C,178,Pending
+7,Nisha Verma,15,10th,Neha Verma,10th,Male,New Delhi,5,91,77,74,32,95,369,C,179,Paid
+8,Suresh Chaudhary,15,9th,Anjali Chaudhary,Graduate,Female,Noida,17.7,60,60,93,40,45,298,E,177,Pending
+9,Sneha Sharma,14,9th,Rohit Sharma,Graduate,Male,East Delhi,11.6,49,44,40,52,44,229,F,149,Pending
+10,Amit Yadav,15,10th,Suresh Yadav,Post-Graduate,Female,South Delhi,13.1,74,71,70,46,79,340,D,185,Pending
+11,Neha Kumar,16,10th,Amit Kumar,10th,Male,Faridabad,4.3,38,47,38,56,63,242,F,140,Pending
+12,Anjali Mehta,15,9th,Nisha Mehta,10th,Male,Ghaziabad,24.8,74,36,39,56,74,279,E,168,Pending
+13,Vikas Mehta,14,9th,Rohit Mehta,10th,Male,Faridabad,10.3,65,65,69,40,44,283,E,133,Paid
+14,Nisha Verma,15,9th,Sneha Verma,Graduate,Male,West Delhi,20.5,83,68,68,41,79,339,D,153,Pending
+15,Nisha Sharma,13,8th,Arjun Sharma,Graduate,Male,Noida,12.3,82,86,59,55,68,350,C,183,Pending
+16,Karan Kumar,14,8th,Kavya Kumar,10th,Female,Noida,20.4,58,40,58,43,49,248,F,180,Paid
+17,Kavya Verma,15,9th,Vikas Verma,Post-Graduate,Female,Gurugram,19.1,88,77,45,79,85,374,C,145,Paid
+18,Mohit Verma,16,10th,Kavya Verma,12th,Male,North Delhi,2.3,81,45,51,46,36,259,E,139,Paid
+19,Karan Sharma,15,9th,Karan Sharma,12th,Female,New Delhi,14.5,68,82,47,85,90,372,C,144,Paid
+20,Ritika Chaudhary,14,8th,Anjali Chaudhary,10th,Female,East Delhi,16,38,93,75,88,77,371,C,186,Paid
+21,Vikas Chaudhary,15,10th,Kavya Chaudhary,10th,Male,West Delhi,8.4,46,44,90,45,70,295,E,127,Paid
+22,Karan Mehta,14,9th,Kavya Mehta,12th,Female,Faridabad,22.5,67,63,33,38,63,264,E,161,Paid
+23,Mohit Kumar,13,8th,Sneha Kumar,10th,Male,New Delhi,20,88,63,47,83,42,323,D,170,Paid
+24,Mohit Gupta,15,10th,Neha Gupta,Post-Graduate,Male,West Delhi,5.7,95,80,76,48,51,350,C,137,Pending
+25,Vikas Singh,16,10th,Nisha Singh,Graduate,Female,Ghaziabad,18.2,67,60,73,83,47,330,D,165,Pending
+26,Sneha Singh,14,8th,Arjun Singh,10th,Male,New Delhi,19.4,56,68,67,95,39,325,D,134,Pending
+27,Kavya Kumar,13,8th,Arjun Kumar,12th,Female,South Delhi,8.2,89,93,63,81,44,370,C,188,Paid
+28,Priya Mehta,13,8th,Mohit Mehta,Graduate,Female,New Delhi,16.3,75,40,63,40,73,291,E,148,Paid
+29,Amit Verma,14,8th,Pooja Verma,12th,Female,Ghaziabad,13.5,68,80,60,44,45,297,E,153,Paid
+30,Rahul Chaudhary,16,10th,Karan Chaudhary,Post-Graduate,Male,Ghaziabad,4.4,52,57,32,62,37,240,F,121,Pending
+31,Sneha Kumar,13,8th,Anjali Kumar,Graduate,Male,East Delhi,2.3,77,66,80,94,54,371,C,147,Pending
+32,Pooja Malhotra,14,8th,Pooja Malhotra,Post-Graduate,Male,East Delhi,8.2,62,45,37,40,77,261,E,168,Paid
+33,Pooja Gupta,14,9th,Rohit Gupta,Graduate,Female,South Delhi,12.9,51,58,72,71,50,302,D,124,Paid
+34,Anjali Agarwal,15,10th,Amit Agarwal,10th,Female,New Delhi,16.5,50,67,30,41,51,239,F,131,Paid
+35,Kavya Verma,15,9th,Anjali Verma,Post-Graduate,Male,Faridabad,19.3,72,68,49,79,83,351,C,161,Paid
+36,Anjali Kumar,14,8th,Suresh Kumar,10th,Male,Faridabad,17.7,87,78,59,40,36,300,D,125,Pending
+37,Priya Chaudhary,14,8th,Kavya Chaudhary,10th,Female,West Delhi,18.8,51,35,88,38,82,294,E,184,Paid
+38,Priya Yadav,16,10th,Pooja Yadav,12th,Male,East Delhi,9.6,49,82,88,93,89,401,B,168,Pending
+39,Kavya Mehta,16,10th,Neha Mehta,Post-Graduate,Female,Faridabad,8.6,74,71,47,31,65,288,E,127,Pending
+40,Kavya Sharma,15,9th,Mohit Sharma,Post-Graduate,Female,Gurugram,6.8,64,84,45,55,54,302,D,130,Paid
+41,Arjun Kumar,13,8th,Arjun Kumar,Graduate,Male,Ghaziabad,22.6,39,72,41,48,82,282,E,187,Pending
+42,Mohit Agarwal,15,9th,Anjali Agarwal,Graduate,Female,Noida,4.8,60,36,50,30,95,271,E,182,Pending
+43,Rahul Mehta,15,9th,Nisha Mehta,Post-Graduate,Female,South Delhi,10.3,35,55,73,80,42,285,E,145,Pending
+44,Pooja Verma,13,8th,Arjun Verma,Graduate,Male,Noida,20.1,83,52,36,65,41,277,E,126,Pending
+45,Amit Agarwal,15,9th,Anjali Agarwal,Post-Graduate,Male,Faridabad,4.9,91,36,81,56,81,345,D,130,Pending
+46,Suresh Gupta,14,9th,Kavya Gupta,Post-Graduate,Male,East Delhi,16.8,61,56,66,68,51,302,D,153,Paid
+47,Mohit Agarwal,14,8th,Karan Agarwal,10th,Male,Noida,14.8,48,67,93,58,63,329,D,162,Pending
+48,Ritika Agarwal,14,9th,Karan Agarwal,Graduate,Female,North Delhi,13.5,50,58,63,55,91,317,D,122,Pending
+49,Sneha Agarwal,14,9th,Mohit Agarwal,Graduate,Male,East Delhi,2.7,43,78,94,57,40,312,D,154,Pending
+50,Mohit Yadav,13,8th,Neha Yadav,12th,Male,Faridabad,24.4,72,66,30,39,60,267,E,187,Paid
+51,Rahul Verma,13,8th,Amit Verma,12th,Female,Faridabad,16.6,95,87,88,40,70,380,C,125,Paid
+52,Sneha Malhotra,13,8th,Rahul Malhotra,Graduate,Female,New Delhi,24.1,41,39,68,54,59,261,E,153,Paid
+53,Pooja Sharma,13,8th,Karan Sharma,Post-Graduate,Male,New Delhi,7.2,65,68,60,61,36,290,E,172,Pending
+54,Ritika Kumar,16,10th,Suresh Kumar,10th,Female,Faridabad,3.6,94,58,59,93,37,341,D,163,Pending
+55,Arjun Mehta,13,8th,Kavya Mehta,12th,Male,Ghaziabad,11.6,47,54,54,59,64,278,E,148,Paid
+56,Rahul Malhotra,13,8th,Ritika Malhotra,10th,Male,Gurugram,12.3,95,73,48,80,38,334,D,147,Pending
+57,Rohit Chaudhary,16,10th,Mohit Chaudhary,Graduate,Female,Noida,24.7,81,42,40,51,56,270,E,144,Pending
+58,Nisha Agarwal,13,8th,Karan Agarwal,Graduate,Female,Gurugram,4,45,41,30,40,52,208,F,130,Pending
+59,Kavya Sharma,15,10th,Ritika Sharma,Post-Graduate,Male,Gurugram,2.8,47,58,87,54,55,301,D,166,Paid
+60,Vikas Kumar,14,9th,Vikas Kumar,10th,Female,Noida,23.3,86,93,37,62,47,325,D,128,Pending
+61,Neha Yadav,16,10th,Mohit Yadav,Graduate,Female,Ghaziabad,5.1,35,81,38,33,87,274,E,149,Pending
+62,Vikas Kumar,15,9th,Nisha Kumar,10th,Male,Gurugram,19.3,46,35,68,49,73,271,E,150,Paid
+63,Vikas Verma,15,9th,Neha Verma,Graduate,Male,West Delhi,4.2,61,39,34,91,70,295,E,189,Pending
+64,Mohit Malhotra,15,10th,Sneha Malhotra,10th,Female,New Delhi,8.4,80,63,52,59,43,297,E,173,Pending
+65,Rohit Gupta,13,8th,Anjali Gupta,12th,Female,South Delhi,11.1,58,51,63,55,63,290,E,151,Paid
+66,Amit Singh,13,8th,Kavya Singh,Post-Graduate,Female,North Delhi,22.2,67,68,59,42,76,312,D,179,Paid
+67,Nisha Chaudhary,13,8th,Mohit Chaudhary,Graduate,Male,South Delhi,16.7,42,38,54,54,94,282,E,129,Pending
+68,Karan Mehta,14,8th,Karan Mehta,Graduate,Female,Noida,6.3,48,37,77,73,44,279,E,125,Pending
+69,Priya Agarwal,14,8th,Suresh Agarwal,12th,Male,East Delhi,11.1,39,48,34,93,70,284,E,181,Pending
+70,Nisha Agarwal,14,9th,Rahul Agarwal,12th,Female,Gurugram,6.7,61,53,69,83,38,304,D,159,Paid
+71,Suresh Malhotra,15,9th,Mohit Malhotra,12th,Male,North Delhi,14.7,62,92,50,84,42,330,D,131,Pending
+72,Nisha Mehta,14,8th,Rohit Mehta,10th,Female,Ghaziabad,19.3,40,71,77,94,45,327,D,138,Paid
+73,Suresh Singh,15,10th,Rohit Singh,Post-Graduate,Male,Ghaziabad,6.2,54,43,35,91,55,278,E,126,Paid
+74,Anjali Gupta,16,10th,Karan Gupta,10th,Female,South Delhi,11,37,60,50,79,57,283,E,135,Pending
+75,Ritika Agarwal,15,10th,Nisha Agarwal,Post-Graduate,Male,North Delhi,2.1,70,89,69,83,54,365,C,151,Pending
+76,Kavya Agarwal,13,8th,Priya Agarwal,Graduate,Female,Noida,4.1,64,50,87,88,88,377,C,142,Pending
+77,Priya Kumar,16,10th,Priya Kumar,Post-Graduate,Male,North Delhi,21.7,67,67,35,35,75,279,E,136,Paid
+78,Sneha Singh,15,9th,Arjun Singh,Graduate,Female,Ghaziabad,5.3,47,43,92,66,86,334,D,141,Pending
+79,Nisha Sharma,14,8th,Rohit Sharma,12th,Female,Noida,22.6,48,72,63,94,50,327,D,160,Paid
+80,Amit Kumar,14,9th,Neha Kumar,Post-Graduate,Female,New Delhi,10.6,85,85,63,44,84,361,C,187,Pending
+81,Mohit Gupta,14,8th,Amit Gupta,Graduate,Female,Noida,18.9,71,44,76,72,83,346,D,130,Paid
+82,Nisha Sharma,14,8th,Kavya Sharma,10th,Male,North Delhi,2.1,49,44,67,85,61,306,D,185,Pending
+83,Anjali Gupta,14,9th,Kavya Gupta,12th,Male,West Delhi,18.3,54,41,75,58,61,289,E,158,Pending
+84,Rahul Sharma,15,10th,Nisha Sharma,Post-Graduate,Female,West Delhi,5.8,41,39,48,64,60,252,E,153,Paid
+85,Rohit Sharma,14,8th,Rahul Sharma,12th,Male,Gurugram,6.6,37,38,33,81,46,235,F,150,Pending
+86,Pooja Sharma,16,10th,Kavya Sharma,10th,Female,Gurugram,19.1,87,74,52,95,54,362,C,128,Pending
+87,Arjun Gupta,16,10th,Amit Gupta,Graduate,Female,North Delhi,8.1,40,82,87,52,49,310,D,133,Pending
+88,Priya Chaudhary,14,8th,Rohit Chaudhary,12th,Male,East Delhi,19.2,78,85,63,67,76,369,C,147,Pending
+89,Suresh Chaudhary,15,9th,Kavya Chaudhary,10th,Male,Gurugram,24,47,91,79,72,73,362,C,150,Paid
+90,Rohit Verma,13,8th,Rahul Verma,10th,Male,Noida,24.5,71,91,69,57,60,348,D,129,Paid
+91,Amit Singh,16,10th,Nisha Singh,10th,Female,South Delhi,7.7,36,37,47,35,79,234,F,128,Paid
+92,Kavya Singh,14,8th,Neha Singh,Graduate,Female,Noida,11.7,42,37,34,41,87,241,F,156,Paid
+93,Vikas Malhotra,16,10th,Kavya Malhotra,10th,Female,North Delhi,12,57,51,66,36,80,290,E,167,Paid
+94,Pooja Verma,14,9th,Rahul Verma,12th,Female,North Delhi,2.1,57,65,36,57,80,295,E,131,Pending
+95,Arjun Malhotra,14,8th,Pooja Malhotra,12th,Female,East Delhi,4.5,41,66,53,93,72,325,D,164,Paid
+96,Suresh Agarwal,16,10th,Priya Agarwal,10th,Female,West Delhi,9,66,85,43,71,57,322,D,132,Pending
+97,Mohit Verma,16,10th,Amit Verma,Graduate,Male,Ghaziabad,17.2,92,69,94,51,59,365,C,149,Pending
+98,Anjali Kumar,14,9th,Sneha Kumar,12th,Female,New Delhi,19.4,45,64,86,62,72,329,D,149,Paid
+99,Nisha Verma,13,8th,Vikas Verma,Graduate,Male,East Delhi,24.1,81,44,61,71,73,330,D,186,Paid
+100,Pooja Agarwal,15,9th,Karan Agarwal,10th,Female,West Delhi,22.4,47,59,49,48,85,288,E,158,Pending
+101,Pooja Yadav,14,8th,Anjali Yadav,Post-Graduate,Male,West Delhi,22.9,37,35,81,85,79,317,D,148,Pending
+102,Rohit Singh,15,9th,Ritika Singh,Graduate,Male,Gurugram,7.6,79,71,83,59,77,369,C,149,Pending
+103,Kavya Yadav,13,8th,Ritika Yadav,12th,Female,North Delhi,10.9,80,80,50,62,89,361,C,174,Pending
+104,Rohit Gupta,16,10th,Nisha Gupta,Post-Graduate,Male,Ghaziabad,13.8,93,41,34,62,69,299,E,147,Pending
+105,Suresh Chaudhary,13,8th,Nisha Chaudhary,Graduate,Female,Gurugram,11.2,68,56,82,88,48,342,D,143,Paid
+106,Neha Gupta,15,9th,Suresh Gupta,12th,Female,Ghaziabad,6.9,39,61,83,75,72,330,D,153,Paid
+107,Anjali Kumar,16,10th,Ritika Kumar,Graduate,Male,Ghaziabad,10.2,94,84,38,54,65,335,D,148,Paid
+108,Kavya Sharma,15,10th,Arjun Sharma,12th,Female,Noida,13,52,80,78,62,62,334,D,143,Pending
+109,Suresh Sharma,14,8th,Vikas Sharma,Graduate,Male,North Delhi,6.8,74,75,40,76,44,309,D,158,Paid
+110,Sneha Verma,15,9th,Nisha Verma,12th,Female,Faridabad,5.9,76,53,62,42,72,305,D,138,Paid
+111,Priya Yadav,16,10th,Neha Yadav,10th,Female,Gurugram,7.4,77,92,68,55,66,358,C,147,Paid
+112,Kavya Gupta,14,9th,Rohit Gupta,10th,Male,Noida,12.8,65,66,37,91,64,323,D,138,Pending
+113,Priya Verma,15,10th,Nisha Verma,10th,Male,Noida,20.6,77,53,89,77,62,358,C,173,Paid
+114,Ritika Verma,15,9th,Neha Verma,Graduate,Female,Faridabad,14.7,67,65,92,48,37,309,D,147,Paid
+115,Amit Mehta,15,9th,Nisha Mehta,Post-Graduate,Female,Faridabad,24.6,53,62,73,84,51,323,D,190,Pending
+116,Vikas Mehta,13,8th,Priya Mehta,Post-Graduate,Female,Faridabad,15.2,48,76,93,45,56,318,D,144,Pending
+117,Amit Chaudhary,16,10th,Suresh Chaudhary,12th,Male,West Delhi,2.9,54,41,30,35,47,207,F,180,Pending
+118,Amit Agarwal,14,8th,Rahul Agarwal,12th,Female,Faridabad,18.3,75,83,52,42,77,329,D,143,Pending
+119,Rahul Mehta,16,10th,Sneha Mehta,12th,Male,Noida,19.8,89,40,57,45,43,274,E,180,Paid
+120,Mohit Mehta,14,8th,Amit Mehta,10th,Male,South Delhi,10.9,81,83,40,67,75,346,D,183,Pending

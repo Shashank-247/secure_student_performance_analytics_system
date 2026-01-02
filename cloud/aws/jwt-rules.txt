@@ -1,0 +1,37 @@
+JWT Authentication Rules – SSPAS
+	•	JWT is issued after successful login
+	•	Token expiry: 15 minutes
+	•	Tokens must be included in Authorization header
+	•	All protected APIs validate JWT
+	•	Role-based authorization is enforced
+	•	Invalid or expired tokens are rejected
+
+
+
+Login Request
+   ↓
+Password verified (bcrypt)
+   ↓
+JWT generated
+   ↓
+Client stores token
+   ↓
+Client sends token with every API request
+   ↓
+Backend validates token
+
+
+
+
+LOGIC FLOW
+User → login
+     → password verified (Argon2)
+     → JWT generated (15 min)
+     → token sent to user
+
+PROTECTED API FLOW 
+User → sends JWT in header
+     → token validated
+     → role checked
+     → access allowed or denied 
+

@@ -1,62 +1,83 @@
-// Mock class data (from CSV / DB later)
-const classData = [
-  { name: "Amit", avg: 85, attendance: 88 },
-  { name: "Riya", avg: 72, attendance: 75 },
-  { name: "Kunal", avg: 64, attendance: 68 },
-  { name: "Neha", avg: 91, attendance: 92 }
-];
+import { apiFetch } from "./api.js";
 
-// Calculations
-const totalStudents = classData.length;
+const token = sessionStorage.getItem("access_token");
+const role = sessionStorage.getItem("role");
 
-const avgScore =
-  (classData.reduce((sum, s) => sum + s.avg, 0) / totalStudents).toFixed(1);
+if (!token || role !== "teacher") {
+  window.location.href = "login.html";
+}
 
-const avgAttendance =
-  (classData.reduce((sum, s) => sum + s.attendance, 0) / totalStudents).toFixed(1);
+let classData = [];
 
-const atRisk = classData.filter(
-  s => s.avg < 65 || s.attendance < 75
-).length;
+async function loadTeacherAnalytics() {
+  try {
+    classData = await apiFetch("/teacher/analytics");
 
-// Populate KPIs
-document.getElementById("classAvg").innerText = avgScore;
-document.getElementById("classAttendance").innerText = avgAttendance + "%";
-document.getElementById("atRiskCount").innerText = atRisk;
-document.getElementById("totalStudents").innerText = totalStudents;
+    const totalStudents = classData.length;
 
-// Score distribution chart
-new Chart(document.getElementById("scoreChart"), {
-  type: "bar",
-  data: {
-    labels: classData.map(s => s.name),
-    datasets: [{
-      label: "Average Score",
-      data: classData.map(s => s.avg),
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      y: { beginAtZero: true, max: 100 }
-    }
+    const avgScore = (
+      classData.reduce((sum, s) => sum + s.avg_score, 0) / totalStudents
+    ).toFixed(1);
+
+    const avgAttendance = (
+      classData.reduce((sum, s) => sum + s.attendance, 0) / totalStudents
+    ).toFixed(1);
+
+    const atRisk = classData.filter(
+      s => s.avg_score < 65 || s.attendance < 75
+    ).length;
+
+    document.getElementById("classAvg").innerText = avgScore;
+    document.getElementById("classAttendance").innerText =
+      avgAttendance + "%";
+    document.getElementById("atRiskCount").innerText = atRisk;
+    document.getElementById("totalStudents").innerText = totalStudents;
+
+    renderCharts(classData);
+  } catch (err) {
+    console.error(err);
+    alert("Failed to load analytics");
   }
-});
+}
 
-// Attendance distribution chart
-new Chart(document.getElementById("attendanceChart"), {
-  type: "line",
-  data: {
-    labels: classData.map(s => s.name),
-    datasets: [{
-      label: "Attendance %",
-      data: classData.map(s => s.attendance),
-      tension: 0.4
-    }]
-  },
-  options: {
-    scales: {
-      y: { beginAtZero: true, max: 100 }
+function renderCharts(data) {
+  new Chart(document.getElementById("scoreChart"), {
+    type: "bar",
+    data: {
+      labels: data.map(s => s.name),
+      datasets: [
+        {
+          label: "Average Score",
+          data: data.map(s => s.avg_score),
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      scales: {
+        y: { beginAtZero: true, max: 100 }
+      }
     }
-  }
-});
+  });
+
+  new Chart(document.getElementById("attendanceChart"), {
+    type: "line",
+    data: {
+      labels: data.map(s => s.name),
+      datasets: [
+        {
+          label: "Attendance %",
+          data: data.map(s => s.attendance),
+          tension: 0.4
+        }
+      ]
+    },
+    options: {
+      scales: {
+        y: { beginAtZero: true, max: 100 }
+      }
+    }
+  });
+}
+
+loadTeacherAnalytics();

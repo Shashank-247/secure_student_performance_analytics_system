@@ -1,35 +1,81 @@
-function showLogin() {
-  document.getElementById("loginForm").classList.add("active");
-  document.getElementById("registerForm").classList.remove("active");
+document.addEventListener("DOMContentLoaded", () => {
 
-  document.getElementById("loginTab").classList.add("active");
-  document.getElementById("registerTab").classList.remove("active");
-}
+  const loginTab = document.getElementById("loginTab");
+  const registerTab = document.getElementById("registerTab");
+  const loginForm = document.getElementById("loginForm");
+  const registerForm = document.getElementById("registerForm");
 
-function showRegister() {
-  document.getElementById("registerForm").classList.add("active");
-  document.getElementById("loginForm").classList.remove("active");
+  if (!loginTab || !registerTab || !loginForm || !registerForm) {
+    console.error("Tab elements not found");
+    return;
+  }
 
-  document.getElementById("registerTab").classList.add("active");
-  document.getElementById("loginTab").classList.remove("active");
-}
+  function showLogin() {
+    loginForm.classList.add("active");
+    registerForm.classList.remove("active");
 
-/* Placeholder login logic */
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+    loginTab.classList.add("active");
+    registerTab.classList.remove("active");
+  }
 
-  const username = document.getElementById("loginUsername").value;
-  const password = document.getElementById("loginPassword").value;
+  function showRegister() {
+    registerForm.classList.add("active");
+    loginForm.classList.remove("active");
 
-  // Later: replace with fetch() to Python backend
-  console.log("Login:", username, password);
+    registerTab.classList.add("active");
+    loginTab.classList.remove("active");
+  }
 
-  // Example redirect
-  window.location.href = "dashboard.html";
-});
+  loginTab.addEventListener("click", showLogin);
+  registerTab.addEventListener("click", showRegister);
 
-/* Placeholder register logic */
-document.getElementById("registerForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  alert("Registration submitted. Await admin approval.");
+  // LOGIN
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("loginUsername").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
+
+    if (!username || !password) {
+      alert("Please enter username and password");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.detail || "Login failed");
+        return;
+      }
+
+      sessionStorage.setItem("access_token", data.access_token);
+      sessionStorage.setItem("role", data.role);
+
+      if (data.role === "student") {
+        window.location.href = "dashboard-student.html";
+      } else if (data.role === "teacher") {
+        window.location.href = "dashboard-teacher.html";
+      } else if (data.role === "admin") {
+        window.location.href = "dashboard-admin.html";
+      }
+
+    } catch (err) {
+      alert("Backend not reachable");
+      console.error(err);
+    }
+  });
+
+  // REGISTER (placeholder)
+  registerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Registration submitted. Await admin approval.");
+  });
+
 });
