@@ -1,3 +1,5 @@
+import { apiFetch } from "./api.js";
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const loginTab = document.getElementById("loginTab");
