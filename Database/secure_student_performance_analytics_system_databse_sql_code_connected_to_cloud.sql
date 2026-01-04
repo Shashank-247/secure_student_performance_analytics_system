@@ -43,11 +43,11 @@ CREATE TABLE IF NOT EXISTS academic_records (
     total INT GENERATED ALWAYS AS (english + hindi + maths + science + sst) STORED,
     grade VARCHAR(2) GENERATED ALWAYS AS (
         CASE
-            WHEN (english + hindi + maths + science + sst) >= 450 THEN 'A'
-            WHEN (english + hindi + maths + science + sst) >= 400 THEN 'B'
-            WHEN (english + hindi + maths + science + sst) >= 350 THEN 'C'
-            WHEN (english + hindi + maths + science + sst) >= 300 THEN 'D'
-            WHEN (english + hindi + maths + science + sst) >= 250 THEN 'E'
+            WHEN total >= 450 THEN 'A'
+            WHEN total >= 400 THEN 'B'
+            WHEN total >= 350 THEN 'C'
+            WHEN total >= 300 THEN 'D'
+            WHEN total >= 250 THEN 'E'
             ELSE 'F'
         END
     ) STORED,
@@ -63,6 +63,33 @@ CREATE TABLE IF NOT EXISTS fees (
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
+-- LOAD STUDENTS CSV
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/students.csv'
+INTO TABLE students
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(student_id, student_name, age, class, parent_name, parent_education, gender, district, weekly_self_study_hours);
+
+-- LOAD ACADEMIC RECORDS CSV
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/academic_records.csv'
+INTO TABLE academic_records
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(student_id, english, hindi, maths, science, sst, attendance);
+
+-- LOAD FEES CSV
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fees.csv'
+INTO TABLE fees
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(student_id, @status)
+SET status = LCASE(TRIM(@status));
 
 -- INSERT TEACHERS
 INSERT INTO teachers (teacher_name, subject) VALUES
@@ -72,21 +99,21 @@ INSERT INTO teachers (teacher_name, subject) VALUES
 ('Neha Singh', 'Hindi'),
 ('Amit Kumar', 'SST');
 
--- INSERT USERS STUDENTS
+-- INSERT USERS - STUDENTS
 INSERT INTO users (username, password_hash, role)
 SELECT CONCAT(student_name,'_',student_id),
        SHA2(CONCAT(student_id, student_name, '@12345'),256),
        'student'
 FROM students;
 
--- INSERT USERS TEACHERS
+-- INSERT USERS - TEACHERS
 INSERT INTO users (username, password_hash, role)
 SELECT CONCAT(teacher_name,'_',teacher_id),
        SHA2(CONCAT(teacher_id, teacher_name, '@123'),256),
        'teacher'
 FROM teachers;
 
--- INSERT ADMIN USER
+-- INSERT USER - ADMIN
 INSERT INTO users (username, password_hash, role)
 VALUES ('admin', SHA2('Admin@12345',256),'admin');
 
@@ -179,9 +206,26 @@ JOIN fees f ON s.student_id = f.student_id;
 -- TEACHER VIEW
 CREATE OR REPLACE VIEW teacher_view AS
 SELECT s.student_id, s.student_name, s.class,
-       a.english, a.hindi, a.maths, a.science, a.sst, a.total, a.grade, a.attendance
+       a.english, a.hindi, a.maths, a.science, a.sst, a.total, a.grade, a.attendance,
+       CASE
+           WHEN a.attendance >= 170 THEN 'Excellent'
+           WHEN a.attendance >= 150 THEN 'Good'
+           ELSE 'Warning'
+       END AS attendance_status,
+       CASE
+           WHEN a.total >= 400 THEN 'Top Performer'
+           WHEN a.total >= 300 THEN 'Average Performer'
+           ELSE 'Needs Attention'
+       END AS performance_category,
+       (SELECT COUNT(*) FROM students s2 WHERE s2.class = s.class) AS total_students_in_class,
+       (SELECT ROUND(AVG(a2.total),2) FROM academic_records a2 JOIN students s2 ON a2.student_id = s2.student_id WHERE s2.class = s.class) AS class_avg_marks,
+       (SELECT ROUND(AVG(a2.attendance),2) FROM academic_records a2 JOIN students s2 ON a2.student_id = s2.student_id WHERE s2.class = s.class) AS class_avg_attendance
 FROM students s
 JOIN academic_records a ON s.student_id = a.student_id;
+
+-- TEACHER UPDATE VIEW
+CREATE OR REPLACE VIEW teacher_update_view AS
+SELECT * FROM academic_records;
 
 -- ADMIN VIEW
 CREATE OR REPLACE VIEW admin_view AS
@@ -191,19 +235,10 @@ FROM students s
 JOIN academic_records a ON s.student_id = a.student_id
 JOIN fees f ON s.student_id = f.student_id;
 
--- GRANT USERS
-CREATE USER IF NOT EXISTS 'admin_user'@'%' IDENTIFIED BY 'Admin@12345';
-GRANT ALL PRIVILEGES ON student_analytics.* TO 'admin_user'@'%';
-
-CREATE USER IF NOT EXISTS 'teacher_user'@'%' IDENTIFIED BY 'Teacher@123';
-GRANT SELECT, UPDATE ON student_analytics.teacher_view TO 'teacher_user'@'%';
-
-CREATE USER IF NOT EXISTS 'student_user'@'%' IDENTIFIED BY 'Student@123';
-GRANT SELECT ON student_analytics.student_self_view TO 'student_user'@'%';
-
-FLUSH PRIVILEGES;
-
-SHOW TABLES;
+-- ADMIN UPDATE VIEWS
+CREATE OR REPLACE VIEW admin_students_update AS SELECT * FROM students;
+CREATE OR REPLACE VIEW admin_academic_update AS SELECT * FROM academic_records;
+CREATE OR REPLACE VIEW admin_fees_update AS SELECT * FROM fees;
 
 
 
