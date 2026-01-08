@@ -63,33 +63,6 @@ CREATE TABLE IF NOT EXISTS fees (
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
--- LOAD STUDENTS CSV
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/students.csv'
-INTO TABLE students
-FIELDS TERMINATED BY ',' 
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS
-(student_id, student_name, age, class, parent_name, parent_education, gender, district, weekly_self_study_hours);
-
--- LOAD ACADEMIC RECORDS CSV
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/academic_records.csv'
-INTO TABLE academic_records
-FIELDS TERMINATED BY ',' 
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS
-(student_id, english, hindi, maths, science, sst, attendance);
-
--- LOAD FEES CSV
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fees.csv'
-INTO TABLE fees
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS
-(student_id, @status)
-SET status = LCASE(TRIM(@status));
 
 -- INSERT TEACHERS
 INSERT INTO teachers (teacher_name, subject) VALUES
@@ -102,20 +75,20 @@ INSERT INTO teachers (teacher_name, subject) VALUES
 -- INSERT USERS - STUDENTS
 INSERT INTO users (username, password_hash, role)
 SELECT CONCAT(student_name,'_',student_id),
-       SHA2(CONCAT(student_id, student_name, '@12345'),256),
+       CONCAT(student_id, student_name, '@12345'),
        'student'
 FROM students;
 
 -- INSERT USERS - TEACHERS
 INSERT INTO users (username, password_hash, role)
 SELECT CONCAT(teacher_name,'_',teacher_id),
-       SHA2(CONCAT(teacher_id, teacher_name, '@123'),256),
+       CONCAT(teacher_id, teacher_name, '@123'),
        'teacher'
 FROM teachers;
 
 -- INSERT USER - ADMIN
 INSERT INTO users (username, password_hash, role)
-VALUES ('admin', SHA2('Admin@12345',256),'admin');
+VALUES ('admin','Admin@12345','admin');
 
 -- OVERALL SCHOOL ANALYTICS VIEW
 CREATE OR REPLACE VIEW overall_school_analytics AS
@@ -241,5 +214,32 @@ CREATE OR REPLACE VIEW admin_academic_update AS SELECT * FROM academic_records;
 CREATE OR REPLACE VIEW admin_fees_update AS SELECT * FROM fees;
 
 
+-- SHOW TABLES AND VIEWS
+SHOW FULL TABLES WHERE Table_type = 'VIEW';
 
 
+-- Tables
+SELECT * FROM students;
+SELECT * FROM teachers;
+SELECT * FROM academic_records;
+SELECT * FROM fees;
+SELECT * FROM users;
+
+-- Views
+SELECT * FROM student_self_view;
+SELECT * FROM teacher_view;
+SELECT * FROM admin_view;
+SELECT * FROM teacher_update_view;
+SELECT * FROM admin_students_update;
+SELECT * FROM admin_academic_update;
+SELECT * FROM admin_fees_update;
+SELECT * FROM overall_school_analytics;
+SELECT * FROM low_attendance_students;
+SELECT * FROM class_avg_attendance;
+SELECT * FROM class_performance;
+SELECT * FROM gender_performance;
+SELECT * FROM district_performance;
+SELECT * FROM fee_defaulters;
+SELECT * FROM performance_distribution;
+SELECT * FROM top_10_students;
+SELECT * FROM bottom_10_students;
