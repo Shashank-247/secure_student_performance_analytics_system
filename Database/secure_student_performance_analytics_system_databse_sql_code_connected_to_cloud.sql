@@ -176,6 +176,28 @@ FROM students s
 JOIN academic_records a ON s.student_id = a.student_id
 JOIN fees f ON s.student_id = f.student_id;
 
+CREATE OR REPLACE VIEW student_rls_view AS
+SELECT s.student_id,
+       s.student_name,
+       s.class,
+       s.gender,
+       s.district,
+       s.weekly_self_study_hours,
+       a.english,
+       a.hindi,
+       a.maths,
+       a.science,
+       a.sst,
+       a.total,
+       a.grade,
+       a.attendance,
+       f.status AS fees_status,
+       CONCAT(s.student_name, '_', s.student_id) AS username
+FROM students s
+JOIN academic_records a ON s.student_id = a.student_id
+JOIN fees f ON s.student_id = f.student_id;
+
+
 -- TEACHER VIEW
 CREATE OR REPLACE VIEW teacher_view AS
 SELECT s.student_id, s.student_name, s.class,
@@ -243,3 +265,7 @@ SELECT * FROM fee_defaulters;
 SELECT * FROM performance_distribution;
 SELECT * FROM top_10_students;
 SELECT * FROM bottom_10_students;
+
+SELECT CURRENT_USER();
+SELECT * FROM student_rls_view;
+
