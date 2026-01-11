@@ -1,0 +1,121 @@
+student_id,student_name,age,class,parents_name,parent_education,gender,district,weekly_study_hours
+1,Priya Chaudhary,13,8th,Nisha Chaudhary,10th,Female,North Delhi,13.6
+2,Sneha Malhotra,13,8th,Suresh Malhotra,12th,Female,Faridabad,21.7
+3,Ajey Nagar,15,10th,Karan Nagar,10th,Male,North Delhi,16.2
+4,Aditi Mehta,14,8th,Rohit Mehta,10th,Female,Faridabad,13.4
+5,Ankit Verma,14,9th,Divya Verma,Post-Graduate,Male,South Delhi,14.7
+6,Priya Singh,14,9th,Aaditya Singh,10th,Female,Ghaziabad,8.5
+7,Nisha Verma,15,10th,Karthik Verma,10th,Female,New Delhi,22.5
+8,Akash Chaudhary,15,9th,Anjali Chaudhary,Graduate,Male,Noida,17.7
+9,Sneha Sharma,14,9th,Rohit Sharma,Graduate,Female,East Delhi,11.6
+10,Shashank Pachori,15,10th,Rakesh Pachori,Post-Graduate,Male,South Delhi,14
+11,Kamala Kumar,16,10th,Amit Kumar,10th,Female,Faridabad,4.3
+12,Anjali Bhatt,15,9th,Nisha Bhatt,10th,Female,Ghaziabad,6.9
+13,Shubhang Mishra,16,8th,Dinesh Mishra,10th,Male,Noida,2.5
+14,Ashish Verma,15,9th,Sneha Verma,Graduate,Male,West Delhi,9.7
+15,Anushka Sharma,15,10th,Arjun Sharma,Graduate,Female,New Delhi,12.3
+16,Chetan Sharma,16,10th,Pravesh Sharma,10th,Male,New Delhi,27.4
+17,Pranay Mehta,14,10th,Pawan Kumar Mehta,Post-Graduate,Male,Gurugram,18.6
+18,Virat Kohli,15,10th,Prem Kohli,Graduate,Male,New Delhi,29.5
+19,Karan Sharma,15,9th,Prem Sharma,12th,Male,New Delhi,14.5
+20,Rashmika Chaudhary,14,8th,Anjali Chaudhary,10th,Female,East Delhi,16
+21,Vikas Chaudhary,15,10th,Kavya Chaudhary,10th,Male,West Delhi,8.4
+22,Karan Mehta,14,9th,Neeraj Mehta,12th,Male,Faridabad,18.9
+23,Tanmay Bhatt,13,8th,Arun Bhat,10th,Male,New Delhi,28
+24,Mohit Gupta,15,10th,Aaditya Gupta,Post-Graduate,Male,West Delhi,13
+25,Vikas Singh,16,10th,Nisha Singh,Graduate,Male,Ghaziabad,18.2
+26,Sneha Singh,14,8th,Arjun Singh,10th,Female,New Delhi,19.4
+27,Anisha Thappa,16,10th,Arjun Thappa,12th,Female,South Delhi,8.2
+28,Salman Khan,13,8th,Salim Khan,Graduate,Male,New Delhi,3.5
+29,Tushar Yadav,15,10th,Shashank Pachori,Post-Graduate,Male,Gurugram,13.5
+30,Pranav Chaudhary,16,9th,Karan Chaudhary,Post-Graduate,Male,Ghaziabad,7.8
+31,Shraddha Kapoor,13,10th,Anjali Kapoor,Graduate,Female,East Delhi,11
+32,Akshay Kumar,14,8th,Pooja Kumar,Post-Graduate,Male,East Delhi,8.2
+33,Priyansh Gupta,14,9th,Rohit Gupta,Graduate,Male,South Delhi,12.9
+34,Anjali Agarwal,15,9th,Amit Agarwal,10th,Female,New Delhi,16.5
+35,Kavya Joshi,15,9th,Anjali Joshi,Post-Graduate,Female,Faridabad,4.8
+36,Aakash Kumar,14,9th,Suresh Kumar,10th,Male,Faridabad,17.7
+37,Kamala Chaudhary,14,9th,Kavya Chaudhary,10th,Female,West Delhi,18.8
+38,Priya Yadav,16,10th,Pooja Yadav,12th,Female,East Delhi,24.6
+39,Karthik Sharma,16,9th,Neha Sharma,Post-Graduate,Male,Faridabad,8.6
+40,Chetan Sharma,15,9th,Mohit Sharma,Post-Graduate,Female,Gurugram,6.8
+41,Kunal Yadav,13,8th,Devendra Yadav,Graduate,Male,Gurugram,22.6
+42,Sandeep Maheshwari,15,9th,Ram Maheshwari,Graduate,Male,Noida,28
+43,Aditi Bhatt,15,9th,Vijay Bhatt,Post-Graduate,Male,South Delhi,10.3
+44,Zunaid Verma,13,8th,Arjun Verma,Graduate,Male,Noida,20.1
+45,Rohit Sharma,14,8th,Rahul Sharma,12th,Male,Gurugram,12.6
+46,Suresh Kohli,14,9th,Siddharth Kohli,Post-Graduate,Male,East Delhi,16.8
+47,Siddharth Malhotra,14,8th,Karan Malhotra,Post-Graduate,Male,New Delhi,21.8
+48,Prakriti Agarwal,14,9th,Prem Agarwal,Graduate,Female,North Delhi,13.5
+49,Mukul Mishra,14,9th,Divya Mishra,Graduate,Male,East Delhi,2.7
+50,Mohit Yadav,13,8th,Karthik Yadav,12th,Male,Faridabad,24.4
+51,Rahul Verma,13,8th,Neeraj Verma,12th,Male,Faridabad,16.6
+52,Bhupendra Jogi,13,8th,Rahul Jogi,Graduate,Male,New Delhi,24.1
+53,Kriti Sharma,16,10th,Karan Sharma,Post-Graduate,Male,New Delhi,7.2
+54,Ritika Kumar,16,10th,Suresh Kumar,10th,Female,Faridabad,19.5
+55,Arjun Mehta,13,8th,Kavya Mehta,12th,Male,Ghaziabad,11.6
+56,Hrithik Malhotra,13,8th,Ritika Malhotra,10th,Male,Gurugram,12.3
+57,Rohit Chaudhary,16,9th,Siddharth Chaudhary,Graduate,Male,Noida,4.6
+58,Sita Bhatt,13,8th,Karan Bhatt,Graduate,Female,Gurugram,12.6
+59,Divya Sharma,15,10th,Ritika Sharma,Post-Graduate,Female,Gurugram,2.8
+60,Krish Kumar,14,9th,Vikas Kumar,10th,Male,Noida,10.5
+61,Mahendra Yadav,16,10th,Mohit Yadav,Graduate,Male,Noida,5.1
+62,Vikas Kumar,15,9th,Sonam Kumar,10th,Male,Gurugram,4.7
+63,Aarav Verma,15,9th,Karthik Verma,Graduate,Male,West Delhi,4.2
+64,Mohit Malhotra,15,9th,Sneha Malhotra,10th,Male,New Delhi,8.4
+65,Rohit Gupta,13,9th,Anjali Gupta,12th,Male,South Delhi,11.1
+66,Naveen Jangid,13,9th,Jadgish Jangid,Post-Graduate,Male,Faridabad,22.2
+67,Nisha Kohli,13,8th,Mohit Kohli,Graduate,Male,South Delhi,16.7
+68,Karan Mehta,14,8th,Aaditya Mehta,Graduate,Male,Noida,13.5
+69,Priya Joshi,14,8th,Samriddhi Joshi,12th,Female,East Delhi,11.1
+70,Alia Bhatt,14,9th,Mahesh Bhatt,Post-Graduate,Female,South Delhi,6.7
+71,Gaurav Malhotra,15,9th,Mohit Malhotra,12th,Male,North Delhi,14
+72,Nisha Kohli,14,8th,Rohit Kohli,10th,Female,Ghaziabad,19.3
+73,Suresh Singh,15,10th,Rohit Singh,Post-Graduate,Male,Ghaziabad,16.3
+74,Anjali Gupta,16,10th,Karan Gupta,10th,Female,South Delhi,11
+75,Ritika Agarwal,15,10th,Nisha Agarwal,Post-Graduate,Female,North Delhi,9
+76,Samay Raina,13,8th,Vijay Raina,Graduate,Male,Noida,3.4
+77,Rupesh Kumar,16,10th,Priya Kumar,Post-Graduate,Male,North Delhi,8.6
+78,Sneha Singh,15,9th,Arjun Singh,Graduate,Female,Ghaziabad,5.3
+79,Kapil Sharma,14,8th,Karunesh Sharma,12th,Male,Noida,22.6
+80,Amit Kumar,14,9th,Prem Kumar,Post-Graduate,Male,Noida,1
+81,Karthik Gupta,14,8th,Amit Gupta,Graduate,Male,Noida,18.9
+82,Yuvika Mishra,14,10th,Yug Mishra,10th,Female,North Delhi,19.8
+83,Aananya Gupta,14,9th,Kavya Gupta,12th,Female,West Delhi,7.8
+84,Prem Sharma,15,10th,Siddharth Sharma,Post-Graduate,Male,West Delhi,5.8
+85,Swapnil Agarwal,15,9th,Anjali Agarwal,Post-Graduate,Male,Faridabad,14.5
+86,Pooja Sharma,16,10th,Kavya Sharma,10th,Female,Gurugram,19.1
+87,Arjun Gupta,16,10th,Amit Gupta,Graduate,Male,North Delhi,8.1
+88,Priya Chaudhary,14,8th,Rohit Chaudhary,12th,Female,East Delhi,19.2
+89,Suresh Chaudhary,15,9th,Kavya Chaudhary,10th,Male,Gurugram,14.5
+90,Prakhar Verma,13,8th,Rahul Verma,10th,Male,Noida,24.5
+91,Amit Singh,16,9th,Nisha Singh,10th,Male,South Delhi,7.7
+92,Saif Ali Khan,13,8th,Mansoor Ali Khan,10th,Male,Noida,16.7
+93,Vikas Malhotra,16,9th,Kavya Malhotra,10th,Male,North Delhi,12
+94,Pooja Verma,14,9th,Rahul Verma,12th,Female,North Delhi,2.1
+95,Arjun Malhotra,14,9th,Pooja Malhotra,12th,Male,East Delhi,13.4
+96,Suresh Agarwal,16,9th,Priya Agarwal,10th,Male,West Delhi,24
+97,Mohit Verma,16,10th,Amit Verma,Graduate,Male,Ghaziabad,17.2
+98,Anjali Kumar,14,9th,Sneha Kumar,12th,Female,New Delhi,8.5
+99,Neeraj Verma,13,8th,Vikas Verma,Graduate,Female,East Delhi,24.1
+100,Sana Tomar,15,10th,Mayank Tomar,Post-Graduate,Female,Gurugram,16
+101,Payal Yadav,14,8th,Anjali Yadav,Post-Graduate,Female,West Delhi,22.9
+102,Bhupesh Singh,15,9th,Ritika Singh,Graduate,Male,Gurugram,7.6
+103,Kiran Yadav,16,10th,Ritika Yadav,12th,Female,North Delhi,10.9
+104,Sonam Gupta,16,10th,Nisha Gupta,Post-Graduate,Male,Ghaziabad,7
+105,Suresh Chaudhary,13,8th,Aaditya Chaudhary,Graduate,Male,Gurugram,11.2
+106,Samriddhi Gupta,15,9th,Suresh Gupta,12th,Female,Ghaziabad,6.9
+107,Aakriti Kumar,16,10th,Ritika Kumar,Graduate,Female,Ghaziabad,10.2
+108,Kareena Kapoor,15,10th,Arjun Kapoor,12th,Female,Noida,13
+109,Kavya Verma,15,9th,Vikas Verma,Post-Graduate,Female,Gurugram,19.1
+110,Sneha Verma,15,9th,Naveen Verma,12th,Female,Faridabad,5.9
+111,Isha Yadav,16,10th,Siddharth Yadav,10th,Female,Gurugram,25.6
+112,Siddharth Gupta,14,9th,Rohit Gupta,10th,Male,Noida,12.8
+113,Priya Verma,15,10th,Karthik Verma,10th,Female,Noida,20.6
+114,Rina Verma,15,9th,Sonam Verma,Graduate,Female,Faridabad,15.8
+115,Yug Mishra,15,9th,Nisha Mishra,Post-Graduate,Male,Faridabad,16.8
+116,Vikas Mehta,13,9th,Priya Mehta,Post-Graduate,Male,Faridabad,15.2
+117,Aaditya Chaudhary,16,10th,Suresh Chaudhary,12th,Male,West Delhi,22.6
+118,Amit Agarwal,14,8th,Rahul Agarwal,12th,Male,Faridabad,18.3
+119,Rahul Bhatt,16,10th,Sneha Bhatt,12th,Male,Noida,19.8
+120,Mukesh Gupta,14,8th,Sonam Gupta,10th,Male,South Delhi,10.9
