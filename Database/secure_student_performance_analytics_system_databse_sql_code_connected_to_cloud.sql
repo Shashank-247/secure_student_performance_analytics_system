@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS students (
     student_name VARCHAR(100),
     age INT,
     class VARCHAR(20),
-    weekly_self_study_hours DECIMAL(4,2),
+    weekly_study_hours DECIMAL(4,2),
     gender VARCHAR(10),
     district VARCHAR(50),
     parent_name VARCHAR(100),
@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS fees (
     status ENUM('paid','unpaid'),
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
-
 
 -- INSERT TEACHERS
 INSERT INTO teachers (teacher_name, subject) VALUES
@@ -169,7 +168,7 @@ LIMIT 10;
 
 -- STUDENT SELF VIEW
 CREATE OR REPLACE VIEW student_self_view AS
-SELECT s.student_id, s.student_name, s.class, s.gender, s.district, s.weekly_self_study_hours,
+SELECT s.student_id, s.student_name, s.class, s.gender, s.district, s.weekly_study_hours,
        a.english, a.hindi, a.maths, a.science, a.sst, a.total, a.grade, a.attendance,
        f.status AS fees_status
 FROM students s
@@ -182,7 +181,7 @@ SELECT s.student_id,
        s.class,
        s.gender,
        s.district,
-       s.weekly_self_study_hours,
+       s.weekly_study_hours,
        a.english,
        a.hindi,
        a.maths,
@@ -224,7 +223,7 @@ SELECT * FROM academic_records;
 
 -- ADMIN VIEW
 CREATE OR REPLACE VIEW admin_view AS
-SELECT s.student_id, s.student_name, s.class, s.weekly_self_study_hours, s.gender, s.district, s.parent_education,
+SELECT s.student_id, s.student_name, s.class, s.weekly_study_hours, s.gender, s.district, s.parent_education,
        a.total, a.grade, a.attendance, f.status AS fees_status
 FROM students s
 JOIN academic_records a ON s.student_id = a.student_id
@@ -268,4 +267,3 @@ SELECT * FROM bottom_10_students;
 
 SELECT CURRENT_USER();
 SELECT * FROM student_rls_view;
-
