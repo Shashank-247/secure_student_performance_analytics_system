@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS students (
     student_name VARCHAR(100),
     age INT,
     class VARCHAR(20),
-    weekly_self_study_hours DECIMAL(4,2),
+    weekly_study_hours DECIMAL(4,2),
     gender VARCHAR(10),
     district VARCHAR(50),
     parent_name VARCHAR(100),
@@ -43,11 +43,11 @@ CREATE TABLE IF NOT EXISTS academic_records (
     total INT GENERATED ALWAYS AS (english + hindi + maths + science + sst) STORED,
     grade VARCHAR(2) GENERATED ALWAYS AS (
         CASE
-            WHEN (english + hindi + maths + science + sst) >= 450 THEN 'A'
-            WHEN (english + hindi + maths + science + sst) >= 400 THEN 'B'
-            WHEN (english + hindi + maths + science + sst) >= 350 THEN 'C'
-            WHEN (english + hindi + maths + science + sst) >= 300 THEN 'D'
-            WHEN (english + hindi + maths + science + sst) >= 250 THEN 'E'
+            WHEN total >= 450 THEN 'A'
+            WHEN total >= 400 THEN 'B'
+            WHEN total >= 350 THEN 'C'
+            WHEN total >= 300 THEN 'D'
+            WHEN total >= 250 THEN 'E'
             ELSE 'F'
         END
     ) STORED,
@@ -63,7 +63,6 @@ CREATE TABLE IF NOT EXISTS fees (
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
-
 -- INSERT TEACHERS
 INSERT INTO teachers (teacher_name, subject) VALUES
 ('Ayush Singh', 'Maths'),
@@ -72,23 +71,23 @@ INSERT INTO teachers (teacher_name, subject) VALUES
 ('Neha Singh', 'Hindi'),
 ('Amit Kumar', 'SST');
 
--- INSERT USERS STUDENTS
+-- INSERT USERS - STUDENTS
 INSERT INTO users (username, password_hash, role)
 SELECT CONCAT(student_name,'_',student_id),
-       SHA2(CONCAT(student_id, student_name, '@12345'),256),
+       CONCAT(student_id, student_name, '@12345'),
        'student'
 FROM students;
 
--- INSERT USERS TEACHERS
+-- INSERT USERS - TEACHERS
 INSERT INTO users (username, password_hash, role)
 SELECT CONCAT(teacher_name,'_',teacher_id),
-       SHA2(CONCAT(teacher_id, teacher_name, '@123'),256),
+       CONCAT(teacher_id, teacher_name, '@123'),
        'teacher'
 FROM teachers;
 
--- INSERT ADMIN USER
+-- INSERT USER - ADMIN
 INSERT INTO users (username, password_hash, role)
-VALUES ('admin', SHA2('Admin@12345',256),'admin');
+VALUES ('admin','Admin@12345','admin');
 
 -- OVERALL SCHOOL ANALYTICS VIEW
 CREATE OR REPLACE VIEW overall_school_analytics AS
@@ -169,42 +168,102 @@ LIMIT 10;
 
 -- STUDENT SELF VIEW
 CREATE OR REPLACE VIEW student_self_view AS
-SELECT s.student_id, s.student_name, s.class, s.gender, s.district, s.weekly_self_study_hours,
+SELECT s.student_id, s.student_name, s.class, s.gender, s.district, s.weekly_study_hours,
        a.english, a.hindi, a.maths, a.science, a.sst, a.total, a.grade, a.attendance,
        f.status AS fees_status
 FROM students s
 JOIN academic_records a ON s.student_id = a.student_id
 JOIN fees f ON s.student_id = f.student_id;
 
+CREATE OR REPLACE VIEW student_rls_view AS
+SELECT s.student_id,
+       s.student_name,
+       s.class,
+       s.gender,
+       s.district,
+       s.weekly_study_hours,
+       a.english,
+       a.hindi,
+       a.maths,
+       a.science,
+       a.sst,
+       a.total,
+       a.grade,
+       a.attendance,
+       f.status AS fees_status,
+       CONCAT(s.student_name, '_', s.student_id) AS username
+FROM students s
+JOIN academic_records a ON s.student_id = a.student_id
+JOIN fees f ON s.student_id = f.student_id;
+
+
 -- TEACHER VIEW
 CREATE OR REPLACE VIEW teacher_view AS
 SELECT s.student_id, s.student_name, s.class,
-       a.english, a.hindi, a.maths, a.science, a.sst, a.total, a.grade, a.attendance
+       a.english, a.hindi, a.maths, a.science, a.sst, a.total, a.grade, a.attendance,
+       CASE
+           WHEN a.attendance >= 170 THEN 'Excellent'
+           WHEN a.attendance >= 150 THEN 'Good'
+           ELSE 'Warning'
+       END AS attendance_status,
+       CASE
+           WHEN a.total >= 400 THEN 'Top Performer'
+           WHEN a.total >= 300 THEN 'Average Performer'
+           ELSE 'Needs Attention'
+       END AS performance_category,
+       (SELECT COUNT(*) FROM students s2 WHERE s2.class = s.class) AS total_students_in_class,
+       (SELECT ROUND(AVG(a2.total),2) FROM academic_records a2 JOIN students s2 ON a2.student_id = s2.student_id WHERE s2.class = s.class) AS class_avg_marks,
+       (SELECT ROUND(AVG(a2.attendance),2) FROM academic_records a2 JOIN students s2 ON a2.student_id = s2.student_id WHERE s2.class = s.class) AS class_avg_attendance
 FROM students s
 JOIN academic_records a ON s.student_id = a.student_id;
 
+-- TEACHER UPDATE VIEW
+CREATE OR REPLACE VIEW teacher_update_view AS
+SELECT * FROM academic_records;
+
 -- ADMIN VIEW
 CREATE OR REPLACE VIEW admin_view AS
-SELECT s.student_id, s.student_name, s.class, s.weekly_self_study_hours, s.gender, s.district, s.parent_education,
+SELECT s.student_id, s.student_name, s.class, s.weekly_study_hours, s.gender, s.district, s.parent_education,
        a.total, a.grade, a.attendance, f.status AS fees_status
 FROM students s
 JOIN academic_records a ON s.student_id = a.student_id
 JOIN fees f ON s.student_id = f.student_id;
 
--- GRANT USERS
-CREATE USER IF NOT EXISTS 'admin_user'@'%' IDENTIFIED BY 'Admin@12345';
-GRANT ALL PRIVILEGES ON student_analytics.* TO 'admin_user'@'%';
-
-CREATE USER IF NOT EXISTS 'teacher_user'@'%' IDENTIFIED BY 'Teacher@123';
-GRANT SELECT, UPDATE ON student_analytics.teacher_view TO 'teacher_user'@'%';
-
-CREATE USER IF NOT EXISTS 'student_user'@'%' IDENTIFIED BY 'Student@123';
-GRANT SELECT ON student_analytics.student_self_view TO 'student_user'@'%';
-
-FLUSH PRIVILEGES;
-
-SHOW TABLES;
+-- ADMIN UPDATE VIEWS
+CREATE OR REPLACE VIEW admin_students_update AS SELECT * FROM students;
+CREATE OR REPLACE VIEW admin_academic_update AS SELECT * FROM academic_records;
+CREATE OR REPLACE VIEW admin_fees_update AS SELECT * FROM fees;
 
 
+-- SHOW TABLES AND VIEWS
+SHOW FULL TABLES WHERE Table_type = 'VIEW';
 
 
+-- Tables
+SELECT * FROM students;
+SELECT * FROM teachers;
+SELECT * FROM academic_records;
+SELECT * FROM fees;
+SELECT * FROM users;
+
+-- Views
+SELECT * FROM student_self_view;
+SELECT * FROM teacher_view;
+SELECT * FROM admin_view;
+SELECT * FROM teacher_update_view;
+SELECT * FROM admin_students_update;
+SELECT * FROM admin_academic_update;
+SELECT * FROM admin_fees_update;
+SELECT * FROM overall_school_analytics;
+SELECT * FROM low_attendance_students;
+SELECT * FROM class_avg_attendance;
+SELECT * FROM class_performance;
+SELECT * FROM gender_performance;
+SELECT * FROM district_performance;
+SELECT * FROM fee_defaulters;
+SELECT * FROM performance_distribution;
+SELECT * FROM top_10_students;
+SELECT * FROM bottom_10_students;
+
+SELECT CURRENT_USER();
+SELECT * FROM student_rls_view;
